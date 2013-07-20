@@ -9,6 +9,7 @@
   <modules>
     <module>security-parent</module>
     <module>security-webapp</module>
+    <module>security-core</module>
   </modules>
 
 </project>
