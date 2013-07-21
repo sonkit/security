@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.User', {
+Ext.define('Security.model.User', {
     extend: 'Ext.data.Model',
 
     fields: [
@@ -40,6 +40,19 @@ Ext.define('MyApp.model.User', {
         },
         {
             name: 'fax'
+        },
+        {
+            name: 'orga'
         }
-    ]
+    ],
+
+    proxy: {
+        type: 'rest',
+        url: 'users',
+        reader: {
+            type: 'json',
+            root: 'content',
+            totalProperty: 'totalElements'
+        }
+    }
 });

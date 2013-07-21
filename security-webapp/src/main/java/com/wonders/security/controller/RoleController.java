@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wonders.security.core.controller.AbstractCrudController;
 import com.wonders.security.core.repository.MyRepository;
-import com.wonders.security.entity.User;
-import com.wonders.security.repository.UserRepository;
+import com.wonders.security.entity.Role;
+import com.wonders.security.repository.RoleRepository;
 
 @Controller
-@RequestMapping("users")
-public class UserController extends AbstractCrudController<User, Long> {
+@RequestMapping("roles")
+public class RoleController extends AbstractCrudController<Role, Long> {
 
 	@Inject
-	private UserRepository userRepository;
+	private RoleRepository roleRepository;
 
 	@Override
-	protected MyRepository<User, Long> getRepository() {
-		return userRepository;
+	protected MyRepository<Role, Long> getRepository() {
+		return roleRepository;
 	}
 
 }

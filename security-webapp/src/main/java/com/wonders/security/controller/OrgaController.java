@@ -13,7 +13,7 @@ import com.wonders.security.repository.OrgaRepository;
 @Controller
 @RequestMapping("orgas")
 public class OrgaController extends AbstractCrudController<Organization, Long> {
-	
+
 	@Inject
 	private OrgaRepository orgaRepository;
 

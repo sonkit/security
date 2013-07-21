@@ -13,11 +13,13 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.view.MyViewport', {
+Ext.define('Security.view.MyViewport', {
     extend: 'Ext.container.Viewport',
 
     requires: [
-        'MyApp.view.UserGridPanel'
+        'Security.view.UserGridPanel',
+        'Security.view.RoleGridPanel',
+        'Security.view.UserRolePanel'
     ],
 
     layout: {
@@ -39,11 +41,6 @@ Ext.define('MyApp.view.MyViewport', {
                 },
                 {
                     xtype: 'toolbar',
-                    region: 'north',
-                    margin: '0 0 3 0'
-                },
-                {
-                    xtype: 'toolbar',
                     margins: '3 0 0 0',
                     region: 'south',
                     items: [
@@ -56,11 +53,27 @@ Ext.define('MyApp.view.MyViewport', {
                 {
                     xtype: 'tabpanel',
                     region: 'center',
+                    activeTab: 0,
                     plain: true,
                     items: [
                         {
-                            xtype: 'usergrid',
-                            closable: true
+                            xtype: 'usergrid'
+                        },
+                        {
+                            xtype: 'rolegrid'
+                        },
+                        {
+                            xtype: 'userrolepanel'
+                        }
+                    ]
+                },
+                {
+                    xtype: 'toolbar',
+                    region: 'north',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: '系统退出'
                         }
                     ]
                 }
