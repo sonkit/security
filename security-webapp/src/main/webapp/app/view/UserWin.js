@@ -39,6 +39,10 @@ Ext.define('Security.view.UserWin', {
                     },
                     items: [
                         {
+                            xtype: 'hiddenfield',
+                            name: 'id'
+                        },
+                        {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '用户名',

@@ -1,11 +1,10 @@
 package com.wonders.security.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import javax.persistence.ManyToOne;
-import static javax.persistence.FetchType.LAZY;
 
 /**
  * Entity implementation class for Entity: User
@@ -31,7 +30,7 @@ public class User extends AbstractPersistable<Long> {
 	
 	private String sex;
 	
-	@ManyToOne(fetch = LAZY, optional = false)
+	@ManyToOne(optional = false)
 	private Organization orga;
 
 	public String getUsername() {

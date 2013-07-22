@@ -54,15 +54,32 @@ Ext.define('Security.controller.UserController', {
         }
     },
 
+    editUser: function(button, e, eOpts) {
+        var userWin = Ext.widget('userwin'),
+            userGrid = this.getUserGrid()
+            selModel = userGrid.getSelectionModel();
+
+        if (selModel.hasSelection()) {
+
+            var record = selModel.getLastSelected(),
+                form = userWin.child('form');
+
+            form.loadRecord(record);
+            userWin.show(button);
+        }
+
+
+    },
+
     addUser: function(button, e, eOpts) {
         var win = Ext.widget('userwin');
         win.show(button);
     },
 
     saveUser: function(button, e, eOpts) {
-        var userWin = this.getUserWin()
-        userGrid = this.getUserGrid(),
-        form = userWin.child('form');
+        var userWin = this.getUserWin(),
+            userGrid = this.getUserGrid(),
+            form = userWin.child('form');
 
         if (form.isValid()) {
             var user = Ext.create('Security.model.User', form.getValues());
@@ -81,6 +98,9 @@ Ext.define('Security.controller.UserController', {
         this.control({
             "usergrid button[text='删除']": {
                 click: this.deleteUser
+            },
+            "usergrid button[text='编辑']": {
+                click: this.editUser
             },
             "usergrid button[text='添加']": {
                 click: this.addUser

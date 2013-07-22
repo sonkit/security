@@ -42,6 +42,10 @@ Ext.define('Security.view.RoleWin', {
                     },
                     items: [
                         {
+                            xtype: 'hiddenfield',
+                            name: 'id'
+                        },
+                        {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '名称',

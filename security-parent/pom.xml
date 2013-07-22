@@ -254,6 +254,34 @@
       </properties>
     </profile>
 
+    <profile>
+      <id>db2</id>
+      <activation>
+        <property>
+          <name>database</name>
+          <value>db2</value>
+        </property>
+      </activation>
+      <properties>
+        <jdbc.driver.groupId>db2jcc</jdbc.driver.groupId>
+        <jdbc.driver.artifactId>db2jcc</jdbc.driver.artifactId>
+        <jdbc.driver.version>9.0</jdbc.driver.version>
+
+        <jdbc.db.driver>com.ibm.db2.jcc.DB2Driver</jdbc.db.driver>
+        <jdbc.db.url>jdbc:db2://192.168.1.59:50000/testdb</jdbc.db.url>
+        <jdbc.db.username>db2admin</jdbc.db.username>
+        <jdbc.db.password>zjyg_123</jdbc.db.password>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>db2</groupId>
+          <artifactId>db2jcc_license_cu</artifactId>
+          <version>9.0</version>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+
   </profiles>
 
 </project>

@@ -60,7 +60,12 @@ Ext.define('Security.view.UserGridPanel', {
                 {
                     xtype: 'gridcolumn',
                     dataIndex: 'fax',
-                    text: '传真',
+                    text: '传真'
+                },
+                {
+                    xtype: 'gridcolumn',
+                    dataIndex: 'orga',
+                    text: '所属组织',
                     flex: 1
                 }
             ],

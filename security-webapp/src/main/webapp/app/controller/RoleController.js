@@ -59,6 +59,22 @@ Ext.define('Security.controller.RoleController', {
         win.show(button);
     },
 
+    editRole: function(button, e, eOpts) {
+        var roleWin = Ext.widget('rolewin'),
+            roleGrid = this.getRoleGrid()
+            selModel = roleGrid.getSelectionModel();
+
+        if (selModel.hasSelection()) {
+
+            var record = selModel.getLastSelected(),
+                form = roleWin.child('form');
+
+            form.loadRecord(record);
+            roleWin.show(button);
+        }
+
+    },
+
     saveRole: function(button, e, eOpts) {
         var roleWin = this.getRoleWin()
         roleGrid = this.getRoleGrid(),
@@ -83,6 +99,9 @@ Ext.define('Security.controller.RoleController', {
             },
             "rolegrid button[text='添加']": {
                 click: this.addRole
+            },
+            "rolegrid button[text='编辑']": {
+                click: this.editRole
             },
             "rolewin button[text='保存']": {
                 click: this.saveRole
