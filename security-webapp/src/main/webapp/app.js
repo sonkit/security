@@ -33,7 +33,8 @@ Ext.application({
     autoCreateViewport: true,
     controllers: [
         'UserController',
-        'RoleController'
+        'RoleController',
+        'OrgaController'
     ],
     name: 'Security'
 });
