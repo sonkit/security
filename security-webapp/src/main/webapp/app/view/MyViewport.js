@@ -19,7 +19,8 @@ Ext.define('Security.view.MyViewport', {
     requires: [
         'Security.view.UserGridPanel',
         'Security.view.RoleGridPanel',
-        'Security.view.UserRolePanel'
+        'Security.view.UserRolePanel',
+        'Security.view.OrgaTree'
     ],
 
     layout: {
@@ -40,17 +41,6 @@ Ext.define('Security.view.MyViewport', {
                     title: '系统功能导航栏'
                 },
                 {
-                    xtype: 'toolbar',
-                    margins: '3 0 0 0',
-                    region: 'south',
-                    items: [
-                        {
-                            xtype: 'tbtext',
-                            text: '万达信息股份有限公司版权所有V1.0'
-                        }
-                    ]
-                },
-                {
                     xtype: 'tabpanel',
                     region: 'center',
                     activeTab: 0,
@@ -64,6 +54,9 @@ Ext.define('Security.view.MyViewport', {
                         },
                         {
                             xtype: 'userrolepanel'
+                        },
+                        {
+                            xtype: 'orgatree'
                         }
                     ]
                 },
@@ -74,6 +67,16 @@ Ext.define('Security.view.MyViewport', {
                         {
                             xtype: 'button',
                             text: '系统退出'
+                        }
+                    ]
+                },
+                {
+                    xtype: 'toolbar',
+                    region: 'south',
+                    items: [
+                        {
+                            xtype: 'tbtext',
+                            text: '万达信息股份有限公司版权所有V1.0'
                         }
                     ]
                 }

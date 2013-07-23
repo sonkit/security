@@ -17,7 +17,7 @@ public class Organization extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 3689173688484489873L;
 
-	private String name;
+	private String text;
 	
 	private String code;
 	
@@ -32,12 +32,12 @@ public class Organization extends AbstractPersistable<Long> {
 	@ManyToOne(fetch = LAZY)
 	private Organization parent;
 
-	public String getName() {
-		return this.name;
+	public String getText() {
+		return text;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public String getCode() {
