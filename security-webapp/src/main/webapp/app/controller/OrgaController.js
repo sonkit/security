@@ -20,13 +20,35 @@ Ext.define('Security.controller.OrgaController', {
         e.stopEvent();
         var treeMenu = Ext.create('Ext.menu.Menu',{
             items: [{
-                text: '添加'
-            },{
+                text: '添加',
+                handler: function(button) {
+                    var orgaWin = Ext.create('Security.view.OrgaWin');
+                    orgaWin.show(button);
+                }
+            }, {
                 xtype: 'menuseparator'
             }, {
-                text: '编辑'
+                text: '编辑',
+                handler: function(button) {
+                    var orgaWin = Ext.create('Security.view.OrgaWin'),
+                        form = orgaWin.child('form');
+
+                    form.loadRecord(record);
+                    orgaWin.show(button);
+                }
             }, {
-                text: '删除'
+                text: '删除',
+                handler: function(button) {
+                    if (record.isLeaf()) {
+                        Ext.create('Security.model.Orga', {
+                            id: record.get('id')
+                        }).destroy({
+                            success: function() {
+                                record.destroy();
+                            }
+                        });
+                    }
+                } 
             }]
         });
         treeMenu.showAt(e.xy);

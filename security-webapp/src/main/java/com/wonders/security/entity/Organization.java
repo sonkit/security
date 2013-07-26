@@ -1,11 +1,17 @@
 package com.wonders.security.entity;
 
+import static javax.persistence.FetchType.LAZY;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import javax.persistence.ManyToOne;
-import static javax.persistence.FetchType.LAZY;
 
 /**
  * Entity implementation class for Entity: Organization
@@ -31,6 +37,9 @@ public class Organization extends AbstractPersistable<Long> {
 	
 	@ManyToOne(fetch = LAZY)
 	private Organization parent;
+	
+	@OneToMany
+	private Set<Organization> children = new HashSet<Organization>();
 
 	public String getText() {
 		return text;
@@ -80,12 +89,27 @@ public class Organization extends AbstractPersistable<Long> {
 		this.description = description;
 	}
 
+	public Boolean isLeaf() {
+		if (Hibernate.isInitialized(children)) {
+			return children == null || children.isEmpty();
+		}
+		return null;
+	}
+
 	public Organization getParent() {
 		return parent;
 	}
 
 	public void setParent(Organization parent) {
 		this.parent = parent;
+	}
+
+	public Set<Organization> getChildren() {
+		return children;
+	}
+
+	public void setChildren(Set<Organization> children) {
+		this.children = children;
 	}
 
 }

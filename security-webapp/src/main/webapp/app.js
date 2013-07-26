@@ -28,7 +28,8 @@ Ext.application({
     views: [
         'MyViewport',
         'UserRolePanel',
-        'OrgaTree'
+        'OrgaTree',
+        'OrgaWin'
     ],
     autoCreateViewport: true,
     controllers: [

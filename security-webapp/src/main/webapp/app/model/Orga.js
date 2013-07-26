@@ -38,5 +38,10 @@ Ext.define('Security.model.Orga', {
         {
             name: 'description'
         }
-    ]
+    ],
+
+    proxy: {
+        type: 'rest',
+        url: 'orgas'
+    }
 });

@@ -26,7 +26,7 @@ Ext.define('Security.store.User', {
         me.callParent([Ext.apply({
             autoLoad: true,
             model: 'Security.model.User',
-            storeId: 'UserStore'
+            storeId: 'User'
         }, cfg)]);
     }
 });
