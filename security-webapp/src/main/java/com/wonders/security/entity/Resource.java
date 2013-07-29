@@ -1,11 +1,10 @@
 package com.wonders.security.entity;
 
-import static javax.persistence.FetchType.LAZY;
-
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -14,26 +13,16 @@ import org.hibernate.Hibernate;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-/**
- * Entity implementation class for Entity: Organization
- * 
- */
 @Entity
-@Table(name = "sec_orga")
-public class Organization extends AbstractPersistable<Long> {
+@Table(name = "sec_resc")
+public class Resource extends AbstractPersistable<Long> {
 
-	private static final long serialVersionUID = 3689173688484489873L;
+	private static final long serialVersionUID = 1824225555278070623L;
 
 	private String text;
-	
+
 	private String code;
-	
-	private String districtCode;
-	
-	private String orgaType;
-	
-	private String address;
-	
+
 	private String description;
 	
 	@Transient
@@ -41,12 +30,12 @@ public class Organization extends AbstractPersistable<Long> {
 	
 	@Transient
 	private Long parentId;
-	
-	@ManyToOne(fetch = LAZY)
-	private Organization parent;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Resource parent;
+
 	@OneToMany
-	private Set<Organization> children = new HashSet<Organization>();
+	private Set<Resource> children = new HashSet<Resource>();
 
 	public String getText() {
 		return text;
@@ -57,45 +46,21 @@ public class Organization extends AbstractPersistable<Long> {
 	}
 
 	public String getCode() {
-		return this.code;
+		return code;
 	}
 
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-	public String getDistrictCode() {
-		return this.districtCode;
-	}
-
-	public void setDistrictCode(String districtCode) {
-		this.districtCode = districtCode;
-	}
-
-	public String getOrgaType() {
-		return this.orgaType;
-	}
-
-	public void setOrgaType(String orgaType) {
-		this.orgaType = orgaType;
-	}
-
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
 	public Boolean isLeaf() {
 		if (Hibernate.isInitialized(children)) {
 			return children == null || children.isEmpty();
@@ -114,20 +79,20 @@ public class Organization extends AbstractPersistable<Long> {
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
-	
-	public Organization getParent() {
+
+	public Resource getParent() {
 		return parent;
 	}
 
-	public void setParent(Organization parent) {
+	public void setParent(Resource parent) {
 		this.parent = parent;
 	}
 
-	public Set<Organization> getChildren() {
+	public Set<Resource> getChildren() {
 		return children;
 	}
 
-	public void setChildren(Set<Organization> children) {
+	public void setChildren(Set<Resource> children) {
 		this.children = children;
 	}
 

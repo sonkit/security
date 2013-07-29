@@ -38,6 +38,10 @@ Ext.define('Security.view.OrgaWin', {
                     },
                     items: [
                         {
+                            xtype: 'hiddenfield',
+                            name: 'id'
+                        },
+                        {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '名称',

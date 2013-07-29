@@ -16,13 +16,34 @@
 Ext.define('Security.controller.OrgaController', {
     extend: 'Ext.app.Controller',
 
+    models: [
+        'Orga'
+    ],
+    stores: [
+        'Orga'
+    ],
+    views: [
+        'OrgaTree',
+        'OrgaWin'
+    ],
+
+    refs: [
+        {
+            ref: 'orgaWin',
+            selector: 'orgawin'
+        }
+    ],
+
     onTreepanelItemContextMenu: function(dataview, record, item, index, e, eOpts) {
         e.stopEvent();
         var treeMenu = Ext.create('Ext.menu.Menu',{
             items: [{
                 text: '添加',
                 handler: function(button) {
-                    var orgaWin = Ext.create('Security.view.OrgaWin');
+                    var orgaWin = Ext.create('Security.view.OrgaWin'),
+                        form = orgaWin.child('form');
+
+                    form.loadRecord(Ext.create('Security.model.Orga'));
                     orgaWin.show(button);
                 }
             }, {
@@ -54,10 +75,33 @@ Ext.define('Security.controller.OrgaController', {
         treeMenu.showAt(e.xy);
     },
 
+    saveOrga: function(button, e, eOpts) {
+        var win = this.getOrgaWin(),
+            form = win.child('form'),
+            orgaStore = this.getOrgaStore(),
+            parentId = form.getRecord().get('parentId');
+
+        if (!parentId) parentId = 0;
+
+        var orga = Ext.create('Security.model.Orga', form.getValues());
+
+        orga.set('parent', {'id': parentId});
+
+        orga.save({
+            success: function() {
+                orgaStore.reload();
+                win.close();
+            }
+        });
+    },
+
     init: function(application) {
         this.control({
-            "treepanel": {
+            "orgatree": {
                 itemcontextmenu: this.onTreepanelItemContextMenu
+            },
+            "orgawin button[text='保存']": {
+                click: this.saveOrga
             }
         });
     }

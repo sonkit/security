@@ -20,7 +20,8 @@ Ext.define('Security.view.MyViewport', {
         'Security.view.UserGridPanel',
         'Security.view.RoleGridPanel',
         'Security.view.UserRolePanel',
-        'Security.view.OrgaTree'
+        'Security.view.OrgaTree',
+        'Security.view.RescTree'
     ],
 
     layout: {
@@ -57,6 +58,9 @@ Ext.define('Security.view.MyViewport', {
                         },
                         {
                             xtype: 'orgatree'
+                        },
+                        {
+                            xtype: 'resctree'
                         }
                     ]
                 },
