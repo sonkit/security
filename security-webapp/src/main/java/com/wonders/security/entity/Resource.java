@@ -8,9 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Hibernate;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -34,7 +34,7 @@ public class Resource extends AbstractPersistable<Long> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Resource parent;
 
-	@OneToMany
+	@OneToMany(mappedBy = "parent")
 	private Set<Resource> children = new HashSet<Resource>();
 
 	public String getText() {

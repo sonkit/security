@@ -1,6 +1,12 @@
 package com.wonders.security.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -32,6 +38,20 @@ public class User extends AbstractPersistable<Long> {
 	
 	@ManyToOne(optional = false)
 	private Organization orga;
+	
+	@ManyToMany
+	@JoinTable(name = "sec_user_role", 
+		joinColumns = @JoinColumn(name = "user_id"), 
+		inverseJoinColumns = @JoinColumn(name = "role_id")
+	)
+	private Set<Role> roles = new HashSet<Role>();
+	
+	@ManyToMany
+	@JoinTable(name = "sec_user_resc", 
+		joinColumns = @JoinColumn(name = "user_id"), 
+		inverseJoinColumns = @JoinColumn(name = "resc_id")
+	)
+	private Set<Resource> rescs = new HashSet<Resource>();
 
 	public String getUsername() {
 		return this.username;
@@ -95,6 +115,22 @@ public class User extends AbstractPersistable<Long> {
 
 	public void setOrga(Organization orga) {
 		this.orga = orga;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Set<Resource> getRescs() {
+		return rescs;
+	}
+
+	public void setRescs(Set<Resource> rescs) {
+		this.rescs = rescs;
 	}
 
 }

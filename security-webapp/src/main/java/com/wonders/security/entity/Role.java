@@ -1,6 +1,12 @@
 package com.wonders.security.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -16,10 +22,17 @@ public class Role extends AbstractPersistable<Long> {
 	private static final long serialVersionUID = -1889052965161052638L;
 
 	private String name;
-	
+
 	private String code;
-	
+
 	private String description;
+
+	@ManyToMany
+	@JoinTable(name = "sec_role_resc", 
+		joinColumns = @JoinColumn(name = "role_id"), 
+		inverseJoinColumns = @JoinColumn(name = "resc_id")
+	)
+	private Set<Resource> rescs = new HashSet<Resource>();
 
 	public String getName() {
 		return this.name;
@@ -43,6 +56,14 @@ public class Role extends AbstractPersistable<Long> {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Set<Resource> getRescs() {
+		return rescs;
+	}
+
+	public void setRescs(Set<Resource> rescs) {
+		this.rescs = rescs;
 	}
 
 }

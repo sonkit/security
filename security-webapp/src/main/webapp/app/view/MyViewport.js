@@ -35,11 +35,64 @@ Ext.define('Security.view.MyViewport', {
             items: [
                 {
                     xtype: 'panel',
+                    margins: '0 0 0 3',
                     region: 'west',
                     split: true,
                     width: 200,
+                    layout: {
+                        align: 'center',
+                        defaultMargins: {
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 20
+                        },
+                        type: 'vbox'
+                    },
                     collapsible: true,
-                    title: '系统功能导航栏'
+                    title: '系统功能导航栏',
+                    items: [
+                        {
+                            xtype: 'image',
+                            listeners: {
+                                el: {
+                                    click: function() {
+                                            Ext.example.msg('提示', '你好，世界！');
+                                        }
+                                }
+                            },
+                            height: 64,
+                            style: 'cursor: pointer',
+                            width: 64,
+                            alt: '用户管理',
+                            src: 'images/user.png',
+                            title: '用户管理'
+                        },
+                        {
+                            xtype: 'image',
+                            height: 64,
+                            style: 'cursor: pointer',
+                            width: 64,
+                            src: 'images/role.png',
+                            title: '角色管理'
+                        },
+                        {
+                            xtype: 'image',
+                            height: 64,
+                            style: 'cursor: pointer',
+                            width: 64,
+                            src: 'images/orga.png',
+                            title: '组织机构管理'
+                        },
+                        {
+                            xtype: 'image',
+                            height: 64,
+                            style: 'cursor: pointer',
+                            width: 64,
+                            src: 'images/res.png',
+                            title: '系统资源管理'
+                        }
+                    ]
                 },
                 {
                     xtype: 'tabpanel',
@@ -66,6 +119,7 @@ Ext.define('Security.view.MyViewport', {
                 },
                 {
                     xtype: 'toolbar',
+                    margins: '0 0 3 0',
                     region: 'north',
                     items: [
                         {
@@ -76,6 +130,7 @@ Ext.define('Security.view.MyViewport', {
                 },
                 {
                     xtype: 'toolbar',
+                    margins: '3 0 0 0',
                     region: 'south',
                     items: [
                         {

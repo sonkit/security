@@ -9,9 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Hibernate;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
@@ -45,7 +45,7 @@ public class Organization extends AbstractPersistable<Long> {
 	@ManyToOne(fetch = LAZY)
 	private Organization parent;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "parent")
 	private Set<Organization> children = new HashSet<Organization>();
 
 	public String getText() {
