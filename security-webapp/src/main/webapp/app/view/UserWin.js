@@ -61,10 +61,17 @@ Ext.define('Security.view.UserWin', {
                             name: 'password'
                         },
                         {
-                            xtype: 'textfield',
+                            xtype: 'combobox',
                             anchor: '100%',
                             fieldLabel: '性别',
-                            name: 'sex'
+                            name: 'sex',
+                            value: '男',
+                            editable: false,
+                            queryMode: 'local',
+                            store: [
+                                '男',
+                                '女'
+                            ]
                         },
                         {
                             xtype: 'textfield',

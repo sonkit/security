@@ -13,6 +13,8 @@ import javax.persistence.Transient;
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "sec_resc")
 public class Resource extends AbstractPersistable<Long> {
@@ -35,6 +37,7 @@ public class Resource extends AbstractPersistable<Long> {
 	private Resource parent;
 
 	@OneToMany(mappedBy = "parent")
+	@JsonIgnore
 	private Set<Resource> children = new HashSet<Resource>();
 
 	public String getText() {

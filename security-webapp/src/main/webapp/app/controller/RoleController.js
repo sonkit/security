@@ -23,7 +23,7 @@ Ext.define('Security.controller.RoleController', {
         'Role'
     ],
     views: [
-        'RoleGridPanel',
+        'RoleGrid',
         'RoleWin'
     ],
 
@@ -50,7 +50,7 @@ Ext.define('Security.controller.RoleController', {
                 success: function() {
                     roleStore.reload();
                 }
-            })
+            });
         }
     },
 
@@ -61,7 +61,7 @@ Ext.define('Security.controller.RoleController', {
 
     editRole: function(button, e, eOpts) {
         var roleWin = Ext.widget('rolewin'),
-            roleGrid = this.getRoleGrid()
+            roleGrid = this.getRoleGrid(),
             selModel = roleGrid.getSelectionModel();
 
         if (selModel.hasSelection()) {
@@ -76,9 +76,9 @@ Ext.define('Security.controller.RoleController', {
     },
 
     saveRole: function(button, e, eOpts) {
-        var roleWin = this.getRoleWin()
-        roleGrid = this.getRoleGrid(),
-        form = roleWin.child('form');
+        var roleWin = this.getRoleWin(),
+            roleGrid = this.getRoleGrid(),
+            form = roleWin.child('form');
 
         if (form.isValid()) {
             Ext.create('Security.model.Role', form.getValues()).save({

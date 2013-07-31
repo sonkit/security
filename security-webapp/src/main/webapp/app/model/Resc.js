@@ -28,6 +28,9 @@ Ext.define('Security.model.Resc', {
         },
         {
             name: 'description'
+        },
+        {
+            name: 'parent'
         }
     ],
 

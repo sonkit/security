@@ -23,7 +23,7 @@ Ext.define('Security.controller.UserController', {
         'User'
     ],
     views: [
-        'UserGridPanel',
+        'UserGrid',
         'UserWin'
     ],
 
@@ -50,13 +50,13 @@ Ext.define('Security.controller.UserController', {
                 success: function() {
                     userStore.reload();
                 }
-            })
+            });
         }
     },
 
     editUser: function(button, e, eOpts) {
         var userWin = Ext.widget('userwin'),
-            userGrid = this.getUserGrid()
+            userGrid = this.getUserGrid(),
             selModel = userGrid.getSelectionModel();
 
         if (selModel.hasSelection()) {

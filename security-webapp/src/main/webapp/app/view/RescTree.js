@@ -18,7 +18,6 @@ Ext.define('Security.view.RescTree', {
     alias: 'widget.resctree',
 
     bodyPadding: 5,
-    closable: true,
     title: '系统资源',
     store: 'Resc',
     useArrows: true,

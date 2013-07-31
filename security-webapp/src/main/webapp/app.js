@@ -19,22 +19,6 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-    models: [
-        'Resc'
-    ],
-    stores: [
-        'Resc'
-    ],
-    views: [
-        'MyViewport',
-        'UserRolePanel',
-        'RescTree'
-    ],
     autoCreateViewport: true,
-    controllers: [
-        'UserController',
-        'RoleController',
-        'OrgaController'
-    ],
     name: 'Security'
 });

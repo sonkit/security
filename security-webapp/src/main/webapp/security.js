@@ -23,26 +23,19 @@ Ext.example = function(){
     };
 }();
 
-addTabCmp = function(args) {
+addTab = function(args) {
     
-    var title = args.title,
-        controller = args.controller,
-        viewXtype = args.viewXtype,
-        app = security.getApplication(),
-        tabs = app.getTabs(),
-        tab = tabs.child(Ext.String.format('panel[title="{0}"]', title));
-
+    var controller = args.controller,
+        view = args.view,
+        app = Security.getApplication(),
+        tabs = Ext.ComponentQuery.query('viewport > tabpanel').pop(),
+        tab = tabs.child(view);
+    
     if (!tab) {
         app.getController(controller);
-        tab = tabs.add(Ext.widget(viewXtype, {
-            title: title,
-            closable: true,
-            searchable: true,
-            operable: true,
-            pagable: true,
-            hasToolbar: true
-        }));
+        tab = tabs.add(Ext.widget(view, {closable: true}));
     }
+
     tabs.setActiveTab(tab);
 };
 

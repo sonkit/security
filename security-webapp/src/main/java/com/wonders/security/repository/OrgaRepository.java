@@ -10,7 +10,7 @@ import com.wonders.security.entity.Organization;
 
 public interface OrgaRepository extends MyRepository<Organization, Long> {
 	
-	@Query("from Organization o left join fetch o.children where o.parent.id = :parentId")
-	List<Organization> findByParentId(@Param("parentId") long parentId);
+	@Query("select distinct(o) from Organization o left join fetch o.children where o.parent.id = :parentId")
+	List<Organization> findByParentId(@Param("parentId") Long parentId);
 
 }

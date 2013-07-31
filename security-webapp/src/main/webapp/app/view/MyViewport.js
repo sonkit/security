@@ -17,11 +17,7 @@ Ext.define('Security.view.MyViewport', {
     extend: 'Ext.container.Viewport',
 
     requires: [
-        'Security.view.UserGridPanel',
-        'Security.view.RoleGridPanel',
-        'Security.view.UserRolePanel',
-        'Security.view.OrgaTree',
-        'Security.view.RescTree'
+        'Security.view.NavPanel'
     ],
 
     layout: {
@@ -34,89 +30,15 @@ Ext.define('Security.view.MyViewport', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'panel',
+                    xtype: 'navpanel',
                     margins: '0 0 0 3',
                     region: 'west',
-                    split: true,
-                    width: 200,
-                    layout: {
-                        align: 'center',
-                        defaultMargins: {
-                            top: 20,
-                            right: 20,
-                            bottom: 20,
-                            left: 20
-                        },
-                        type: 'vbox'
-                    },
-                    collapsible: true,
-                    title: '系统功能导航栏',
-                    items: [
-                        {
-                            xtype: 'image',
-                            listeners: {
-                                el: {
-                                    click: function() {
-                                            Ext.example.msg('提示', '你好，世界！');
-                                        }
-                                }
-                            },
-                            height: 64,
-                            style: 'cursor: pointer',
-                            width: 64,
-                            alt: '用户管理',
-                            src: 'images/user.png',
-                            title: '用户管理'
-                        },
-                        {
-                            xtype: 'image',
-                            height: 64,
-                            style: 'cursor: pointer',
-                            width: 64,
-                            src: 'images/role.png',
-                            title: '角色管理'
-                        },
-                        {
-                            xtype: 'image',
-                            height: 64,
-                            style: 'cursor: pointer',
-                            width: 64,
-                            src: 'images/orga.png',
-                            title: '组织机构管理'
-                        },
-                        {
-                            xtype: 'image',
-                            height: 64,
-                            style: 'cursor: pointer',
-                            width: 64,
-                            src: 'images/res.png',
-                            title: '系统资源管理'
-                        }
-                    ]
+                    split: true
                 },
-                {
+                me.processTabs({
                     xtype: 'tabpanel',
-                    region: 'center',
-                    activeTab: 0,
-                    plain: true,
-                    items: [
-                        {
-                            xtype: 'usergrid'
-                        },
-                        {
-                            xtype: 'rolegrid'
-                        },
-                        {
-                            xtype: 'userrolepanel'
-                        },
-                        {
-                            xtype: 'orgatree'
-                        },
-                        {
-                            xtype: 'resctree'
-                        }
-                    ]
-                },
+                    region: 'center'
+                }),
                 {
                     xtype: 'toolbar',
                     margins: '0 0 3 0',
@@ -143,6 +65,16 @@ Ext.define('Security.view.MyViewport', {
         });
 
         me.callParent(arguments);
+    },
+
+    processTabs: function(config) {
+        config.plugins = [{
+            ptype: 'tabclosemenu',
+            closeTabText: '关闭标签',
+            closeOthersTabsText: '关闭其它标签',
+            closeAllTabsText: '关闭所有标签'
+        }];
+        return config;
     }
 
 });

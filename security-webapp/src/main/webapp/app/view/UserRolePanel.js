@@ -18,8 +18,8 @@ Ext.define('Security.view.UserRolePanel', {
     alias: 'widget.userrolepanel',
 
     requires: [
-        'Security.view.UserGridPanel',
-        'Security.view.RoleGridPanel'
+        'Security.view.UserGrid',
+        'Security.view.RoleGrid'
     ],
 
     layout: {

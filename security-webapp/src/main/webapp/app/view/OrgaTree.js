@@ -18,7 +18,6 @@ Ext.define('Security.view.OrgaTree', {
     alias: 'widget.orgatree',
 
     bodyPadding: 5,
-    closable: true,
     title: '组织机构',
     store: 'Orga',
     useArrows: true,

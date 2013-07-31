@@ -14,6 +14,8 @@ import javax.persistence.Transient;
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Entity implementation class for Entity: Organization
  * 
@@ -46,6 +48,7 @@ public class Organization extends AbstractPersistable<Long> {
 	private Organization parent;
 	
 	@OneToMany(mappedBy = "parent")
+	@JsonIgnore
 	private Set<Organization> children = new HashSet<Organization>();
 
 	public String getText() {
