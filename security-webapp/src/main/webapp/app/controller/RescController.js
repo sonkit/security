@@ -43,16 +43,20 @@ Ext.define('Security.controller.RescController', {
                     var rescWin = Ext.create('Security.view.RescWin'),
                         form = rescWin.child('form');
 
-                    form.loadRecord(Ext.create('Security.model.Resc'));
+                    form.loadRecord(Ext.create('Security.model.Resc', {
+                        parent: {id: record.get('id')}
+                    }));
                     rescWin.show(button);
                 }
             }, {
                 xtype: 'menuseparator'
             }, {
                 text: '编辑',
-                handler: function(button) {
+                handler: function(button) {            
                     var rescWin = Ext.create('Security.view.RescWin'),
                         form = rescWin.child('form');
+
+                    record.set('parent', {id: record.get('parentId')});
 
                     form.loadRecord(record);
                     rescWin.show(button);
@@ -78,18 +82,14 @@ Ext.define('Security.controller.RescController', {
     saveResc: function(button, e, eOpts) {
         var win = this.getRescWin(),
             form = win.child('form'),
-            rescStore = this.getRescStore(),
-            parentId = form.getRecord().get('parentId');
+            resc = form.getRecord(),
+            rescStore = this.getRescStore();
 
-        if (!parentId) parentId = 0;
-
-        var resc = Ext.create('Security.model.Resc', form.getValues());
-
-        resc.set('parent', {'id': parentId});
+        resc.set(form.getValues());
 
         resc.save({
             success: function() {
-                rescStore.reload();
+                rescStore.load();
                 win.close();
             }
         });

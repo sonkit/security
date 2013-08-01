@@ -68,8 +68,7 @@ Ext.define('Security.controller.OrgaController', {
                         Ext.create('Security.model.Orga', {
                             id: record.get('id')
                         }).destroy({
-                            success: function() {
-                                var parentNode = record.parentNode;
+                            success: function() {                        
                                 record.remove();
                             }
                         });
@@ -83,15 +82,14 @@ Ext.define('Security.controller.OrgaController', {
     saveOrga: function(button, e, eOpts) {
         var win = this.getOrgaWin(),
             form = win.child('form'),
-            orgaStore = this.getOrgaStore(),
-            record = form.getRecord();
+            orga = form.getRecord(),
+            orgaStore = this.getOrgaStore();
 
-        var orga = Ext.create('Security.model.Orga', form.getValues());
-        orga.set('parent', record.get('parent'));
+        orga.set(form.getValues());
 
         orga.save({
-            success: function(organization) {
-                orgaStore.reload();
+            success: function() {
+                orgaStore.load();
                 win.close();
             }
         });

@@ -17,7 +17,7 @@ Ext.define('Security.store.Resc', {
     extend: 'Ext.data.TreeStore',
 
     requires: [
-        'Security.model.Orga'
+        'Security.model.Resc'
     ],
 
     constructor: function(cfg) {
@@ -25,7 +25,7 @@ Ext.define('Security.store.Resc', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             autoLoad: true,
-            model: 'Security.model.Orga',
+            model: 'Security.model.Resc',
             storeId: 'Rescs',
             root: {
                 id: 0,
