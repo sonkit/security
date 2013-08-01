@@ -26,7 +26,7 @@ Ext.define('Security.store.Orga', {
         me.callParent([Ext.apply({
             autoLoad: true,
             model: 'Security.model.Orga',
-            storeId: 'OrgaStore',
+            storeId: 'Orga',
             root: {
                 id: 0,
                 text: '组织机构'

@@ -91,27 +91,27 @@ Ext.define('Security.view.UserWin', {
                             fieldLabel: '传真',
                             name: 'fax'
                         },
-                        {
-                            xtype: 'textfield',
+                        me.processOrgaid({
+                            xtype: 'triggerfield',
                             anchor: '100%',
-                            fieldLabel: '所属组织',
+                            fieldLabel: '组织机构',
                             name: 'orga.id'
-                        }
-                    ]
-                }
-            ],
-            dockedItems: [
-                {
-                    xtype: 'toolbar',
-                    dock: 'bottom',
-                    items: [
+                        })
+                    ],
+                    dockedItems: [
                         {
-                            xtype: 'button',
-                            text: '保存'
-                        },
-                        {
-                            xtype: 'button',
-                            text: '关闭'
+                            xtype: 'toolbar',
+                            dock: 'bottom',
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    text: '保存'
+                                },
+                                {
+                                    xtype: 'button',
+                                    text: '关闭'
+                                }
+                            ]
                         }
                     ]
                 }
@@ -119,6 +119,17 @@ Ext.define('Security.view.UserWin', {
         });
 
         me.callParent(arguments);
+    },
+
+    processOrgaid: function(config) {
+        config.xtype = 'treepicker';
+        config.displayField = 'text';
+        config.forceSelection = true;
+
+        config.store = Ext.create('Security.store.Orga', {
+            autoLoad: true
+        });
+        return config;
     }
 
 });

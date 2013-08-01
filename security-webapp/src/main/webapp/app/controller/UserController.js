@@ -65,6 +65,7 @@ Ext.define('Security.controller.UserController', {
                 form = userWin.child('form');
 
             form.loadRecord(record);
+            form.getForm().findField('orga.id').setValue(record.get('orga').id);
             userWin.show(button);
         }
 

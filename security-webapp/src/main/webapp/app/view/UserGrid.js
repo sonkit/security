@@ -63,7 +63,7 @@ Ext.define('Security.view.UserGrid', {
                 },
                 {
                     xtype: 'gridcolumn',
-                    dataIndex: 'orga',
+                    dataIndex: 'orgaText',
                     text: '所属组织',
                     flex: 1
                 }

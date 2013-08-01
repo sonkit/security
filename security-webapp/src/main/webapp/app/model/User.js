@@ -42,8 +42,11 @@ Ext.define('Security.model.User', {
             name: 'fax'
         },
         {
+            name: 'orga'
+        },
+        {
             mapping: 'orga.text',
-            name: 'orga',
+            name: 'orgaText',
             persist: false
         }
     ],
