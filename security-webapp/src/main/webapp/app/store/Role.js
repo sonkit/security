@@ -26,7 +26,7 @@ Ext.define('Security.store.Role', {
         me.callParent([Ext.apply({
             autoLoad: true,
             model: 'Security.model.Role',
-            storeId: 'MyStore'
+            storeId: 'Role'
         }, cfg)]);
     }
 });

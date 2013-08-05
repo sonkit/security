@@ -28,18 +28,15 @@ Ext.define('Security.view.UserGrid', {
             columns: [
                 {
                     xtype: 'gridcolumn',
+                    width: 119,
                     dataIndex: 'username',
                     text: '用户名'
                 },
                 {
                     xtype: 'gridcolumn',
+                    width: 118,
                     dataIndex: 'loginName',
                     text: '登录名'
-                },
-                {
-                    xtype: 'gridcolumn',
-                    dataIndex: 'password',
-                    text: '密码'
                 },
                 {
                     xtype: 'gridcolumn',
@@ -98,12 +95,17 @@ Ext.define('Security.view.UserGrid', {
                             tooltip: '编辑'
                         },
                         {
+                            xtype: 'button',
+                            text: '删除',
+                            tooltip: '删除'
+                        },
+                        {
                             xtype: 'tbseparator'
                         },
                         {
                             xtype: 'button',
-                            text: '删除',
-                            tooltip: '删除'
+                            text: '用户授权',
+                            tooltip: '用户授权'
                         }
                     ]
                 }

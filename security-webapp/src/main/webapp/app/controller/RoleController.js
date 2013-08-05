@@ -83,6 +83,7 @@ Ext.define('Security.controller.RoleController', {
         if (form.isValid()) {
             Ext.create('Security.model.Role', form.getValues()).save({
                 success: function() {
+                    roleGrid.getSelectionModel().deselectAll();
                     roleGrid.getStore().reload();
                     roleWin.close();
                 }

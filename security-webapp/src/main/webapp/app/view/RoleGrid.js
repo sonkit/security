@@ -98,7 +98,16 @@ Ext.define('Security.view.RoleGrid', {
         }
         if (config.newStore) {
             config.store = Ext.create('Security.store.Role', {
-                autoLoad: false
+                autoLoad: false,
+                proxy: {
+                    type: 'rest',
+                    url: 'roles/findByUserId',
+                    reader: {
+                        type: 'json',
+                        root: 'content',
+                        totalProperty: 'totalElements'
+                    }
+                }
             });
         }
     }

@@ -38,22 +38,6 @@ Ext.define('Security.controller.UserController', {
         }
     ],
 
-    deleteUser: function(button, e, eOpts) {
-        var selModel = this.getUserGrid().getSelectionModel(),
-            userStore = this.getUserStore();
-
-        if (selModel.hasSelection()) {
-            var record = selModel.getLastSelected();
-            Ext.create('Security.model.User', {
-                id: record.get('id')
-            }).destroy({
-                success: function() {
-                    userStore.reload();
-                }
-            });
-        }
-    },
-
     editUser: function(button, e, eOpts) {
         var userWin = Ext.widget('userwin'),
             userGrid = this.getUserGrid(),
@@ -72,6 +56,39 @@ Ext.define('Security.controller.UserController', {
 
     },
 
+    deleteUser: function(button, e, eOpts) {
+        var selModel = this.getUserGrid().getSelectionModel(),
+            userStore = this.getUserStore();
+
+        if (selModel.hasSelection()) {
+            Ext.Msg.confirm('提示', '您确定要删除吗?', function(buttonId) {
+                if (buttonId == 'yes') {
+                    var record = selModel.getLastSelected();
+                    Ext.create('Security.model.User', {
+                        id: record.get('id')
+                    }).destroy({
+                        success: function() {
+                            userStore.reload();
+                        }
+                    });
+                }
+            });
+        }
+    },
+
+    userRoleMgr: function(button, e, eOpts) {
+
+        var tabs = Ext.ComponentQuery.query('viewport > tabpanel').pop(),
+            userrolepanel = tabs.child('userrolepanel');
+
+        if (!userrolepanel) {
+            this.getController('UserRoleController');
+            userrolepanel = tabs.add(Ext.widget('userrolepanel'))
+        }
+        tabs.setActiveTab(userrolepanel);
+
+    },
+
     addUser: function(button, e, eOpts) {
         var win = Ext.widget('userwin');
         win.show(button);
@@ -87,6 +104,7 @@ Ext.define('Security.controller.UserController', {
             user.set('orga', {id: form.getForm().findField('orga.id').getValue()});
             user.save({
                 success: function() {
+                    userGrid.getSelectionModel().deselectAll();
                     userGrid.getStore().reload();
                     userWin.close();
                 }
@@ -97,11 +115,14 @@ Ext.define('Security.controller.UserController', {
 
     init: function(application) {
         this.control({
+            "usergrid button[text='编辑']": {
+                click: this.editUser
+            },
             "usergrid button[text='删除']": {
                 click: this.deleteUser
             },
-            "usergrid button[text='编辑']": {
-                click: this.editUser
+            "usergrid button[text='用户授权']": {
+                click: this.userRoleMgr
             },
             "usergrid button[text='添加']": {
                 click: this.addUser

@@ -26,7 +26,7 @@ public class Role extends AbstractPersistable<Long> {
 	private String code;
 
 	private String description;
-
+	
 	@ManyToMany
 	@JoinTable(name = "sec_role_resc", 
 		joinColumns = @JoinColumn(name = "role_id"), 
@@ -57,7 +57,7 @@ public class Role extends AbstractPersistable<Long> {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
 	public Set<Resource> getRescs() {
 		return rescs;
 	}
