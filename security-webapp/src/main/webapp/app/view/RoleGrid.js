@@ -94,10 +94,24 @@ Ext.define('Security.view.RoleGrid', {
 
     processRoleGrid: function(config) {
         if (config.removeDockedItems) {
-            config.dockedItems = [];
+            config.selModel = Ext.create('Ext.selection.CheckboxModel');
+
+            config.dockedItems = [{
+                xtype: 'toolbar',
+                items: [{
+                    text: '添加',
+                    tooltip: '添加'
+                },{
+                    text: '删除',
+                    tooltip: '删除'
+                }]
+            }];
+
         }
+
         if (config.newStore) {
             config.store = Ext.create('Security.store.Role', {
+                storeId: 'RoleStore',
                 autoLoad: false,
                 proxy: {
                     type: 'rest',

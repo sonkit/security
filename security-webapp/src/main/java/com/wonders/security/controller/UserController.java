@@ -7,12 +7,14 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wonders.security.core.controller.AbstractCrudController;
 import com.wonders.security.core.repository.MyRepository;
 import com.wonders.security.entity.User;
 import com.wonders.security.repository.UserRepository;
+import com.wonders.security.service.UserService;
 
 @Controller
 @RequestMapping("users")
@@ -20,6 +22,9 @@ public class UserController extends AbstractCrudController<User, Long> {
 
 	@Inject
 	private UserRepository userRepository;
+	
+	@Inject
+	private UserService userService;
 
 	@Override
 	protected MyRepository<User, Long> getRepository() {
@@ -36,6 +41,18 @@ public class UserController extends AbstractCrudController<User, Long> {
 	protected @ResponseBody User modify(@RequestBody User user) {
 		user.setPassword(md5(user.getPassword()));
 		return super.modify(user);
+	}
+	
+	@RequestMapping(value = "addRolesToUser", method = RequestMethod.PUT)
+	protected @ResponseBody
+	User addRolesToUser(Long userId, Long... roleIds) {
+		return userService.addRolesToUser(userId, roleIds);
+	}
+
+	@RequestMapping(value = "removeRolesFromUser", method = RequestMethod.PUT)
+	protected @ResponseBody
+	User removeRolesFromUser(Long userId, Long... roleIds) {
+		return userService.removeRolesFromUser(userId, roleIds);
 	}
 
 	private String md5(String source) {

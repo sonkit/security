@@ -21,7 +21,8 @@ Ext.define('Security.controller.UserRoleController', {
         'Role'
     ],
     views: [
-        'UserRolePanel'
+        'UserRolePanel',
+        'RoleListWin'
     ],
 
     userGridItemClick: function(dataview, record, item, index, e, eOpts) {
@@ -35,10 +36,92 @@ Ext.define('Security.controller.UserRoleController', {
         roleStore.load();
     },
 
+    removeRolesFromUser: function(button, e, eOpts) {
+        var userrolepanel = Ext.ComponentQuery.query('userrolepanel').pop(),
+            userGrid = userrolepanel.child('usergrid'),
+            roleGrid = userrolepanel.child('rolegrid'),
+            userSm = userGrid.getSelectionModel(),
+            roleSm = roleGrid.getSelectionModel();
+
+        if (roleSm.hasSelection()) {
+
+            var userId = userSm.getLastSelected().get('id'),
+                roles = roleSm.getSelection(),
+                roleIds = [];
+
+
+            Ext.each(roles, function(role) {
+                roleIds.push(role.get('id'));
+            });
+
+            Ext.Ajax.request({
+                url: 'users/removeRolesFromUser',
+                method: 'PUT',
+                params: {
+                    'userId': userId,
+                    'roleIds': roleIds
+                },
+                success: function(response, opts) {
+                    roleGrid.getStore().reload();
+                }
+            });
+
+        }
+    },
+
+    openRoleListWin: function(button, e, eOpts) {
+        Ext.widget('rolelistwin').show(button);
+    },
+
+    addRolesToUser: function(button, e, eOpts) {
+        var userrolepanel = Ext.ComponentQuery.query('userrolepanel').pop(),
+            userGrid = userrolepanel.child('usergrid'),
+            roleGrid = userrolepanel.child('rolegrid'),
+            roleListWin = Ext.ComponentQuery.query('rolelistwin').pop(),
+            roleGrid2 = roleListWin.child('gridpanel'),
+            userSm = userGrid.getSelectionModel(),
+            roleSm = roleGrid2.getSelectionModel();
+
+        if (roleSm.hasSelection()) {
+
+            var userId = userSm.getLastSelected().get('id'),
+                roles = roleSm.getSelection(),
+                roleIds = [];
+
+
+            Ext.each(roles, function(role) {
+                roleIds.push(role.get('id'));
+            });
+
+            Ext.Ajax.request({
+                url: 'users/addRolesToUser',
+                method: 'PUT',
+                params: {
+                    'userId': userId,
+                    'roleIds': roleIds
+                },
+                success: function(response, opts) {
+                    roleListWin.close();
+                    roleGrid.getStore().reload();
+                }
+            });
+
+        }
+    },
+
     init: function(application) {
         this.control({
             "userrolepanel > usergrid": {
                 itemclick: this.userGridItemClick
+            },
+            "userrolepanel > rolegrid button[text='删除']": {
+                click: this.removeRolesFromUser
+            },
+            "userrolepanel > rolegrid button[text='添加']": {
+                click: this.openRoleListWin
+            },
+            "rolelistwin button[text='确定']": {
+                click: this.addRolesToUser
             }
         });
     }

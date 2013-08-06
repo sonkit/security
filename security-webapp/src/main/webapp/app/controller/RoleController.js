@@ -95,13 +95,13 @@ Ext.define('Security.controller.RoleController', {
 
     init: function(application) {
         this.control({
-            "rolegrid button[text='删除']": {
+            "rolegrid[closable] button[text='删除']": {
                 click: this.deleteRole
             },
-            "rolegrid button[text='添加']": {
+            "rolegrid[closable] button[text='添加']": {
                 click: this.addRole
             },
-            "rolegrid button[text='编辑']": {
+            "rolegrid[closable] button[text='编辑']": {
                 click: this.editRole
             },
             "rolewin button[text='保存']": {

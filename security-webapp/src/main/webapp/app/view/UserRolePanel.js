@@ -39,8 +39,8 @@ Ext.define('Security.view.UserRolePanel', {
             items: [
                 {
                     xtype: 'usergrid',
-                    flex: 1,
-                    removeDockedItems: true
+                    removeDockedItems: true,
+                    flex: 1
                 },
                 {
                     xtype: 'splitter',
