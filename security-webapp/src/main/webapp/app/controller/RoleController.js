@@ -30,7 +30,7 @@ Ext.define('Security.controller.RoleController', {
     refs: [
         {
             ref: 'roleGrid',
-            selector: 'rolegrid'
+            selector: 'tabpanel > rolegrid'
         },
         {
             ref: 'roleWin',
@@ -43,20 +43,23 @@ Ext.define('Security.controller.RoleController', {
             roleStore = this.getRoleStore();
 
         if (selModel.hasSelection()) {
-            var record = selModel.getLastSelected();
-            Ext.create('Security.model.Role', {
-                id: record.get('id')
-            }).destroy({
-                success: function() {
-                    roleStore.reload();
+            Ext.Msg.confirm('提示', '您确定要删除吗?', function(buttonId) {
+                if (buttonId == 'yes') {
+                    var record = selModel.getLastSelected();
+                    Ext.create('Security.model.Role', {
+                        id: record.get('id')
+                    }).destroy({
+                        success: function() {
+                            roleStore.reload();
+                        }
+                    });
                 }
             });
         }
     },
 
     addRole: function(button, e, eOpts) {
-        var win = Ext.widget('rolewin');
-        win.show(button);
+        Ext.widget('rolewin').show(button);
     },
 
     editRole: function(button, e, eOpts) {
@@ -95,13 +98,13 @@ Ext.define('Security.controller.RoleController', {
 
     init: function(application) {
         this.control({
-            "rolegrid[closable] button[text='删除']": {
+            "tabpanel > rolegrid button[text='删除']": {
                 click: this.deleteRole
             },
-            "rolegrid[closable] button[text='添加']": {
+            "tabpanel > rolegrid button[text='添加']": {
                 click: this.addRole
             },
-            "rolegrid[closable] button[text='编辑']": {
+            "tabpanel > rolegrid button[text='编辑']": {
                 click: this.editRole
             },
             "rolewin button[text='保存']": {
