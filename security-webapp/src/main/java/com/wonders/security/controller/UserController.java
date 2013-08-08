@@ -1,6 +1,7 @@
 package com.wonders.security.controller;
 
 import java.security.MessageDigest;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wonders.security.core.controller.AbstractCrudController;
 import com.wonders.security.core.repository.MyRepository;
+import com.wonders.security.entity.Organization;
 import com.wonders.security.entity.User;
 import com.wonders.security.repository.UserRepository;
 import com.wonders.security.service.UserService;
@@ -53,6 +55,13 @@ public class UserController extends AbstractCrudController<User, Long> {
 	protected @ResponseBody
 	User removeRolesFromUser(Long userId, Long... roleIds) {
 		return userService.removeRolesFromUser(userId, roleIds);
+	}
+	
+	@RequestMapping(value = "findByOrgaId", method = RequestMethod.GET)
+	protected @ResponseBody
+	List<User> findByOrgaId(long orgaId) {
+		Organization orga = new Organization(orgaId);
+		return userRepository.findByOrga(orga);
 	}
 
 	private String md5(String source) {

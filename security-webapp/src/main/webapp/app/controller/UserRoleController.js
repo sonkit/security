@@ -25,8 +25,8 @@ Ext.define('Security.controller.UserRoleController', {
         'RoleListWin'
     ],
 
-    userGridItemClick: function(dataview, record, item, index, e, eOpts) {
-        var userId = record.get('id'),
+    userGridSelectionChange: function(model, selected, eOpts) {
+        var userId = selected[0].get('id'),
             roleGrid = Ext.ComponentQuery.query('userrolepanel').pop().child('rolegrid'),
             roleStore = roleGrid.getStore();
 
@@ -112,7 +112,7 @@ Ext.define('Security.controller.UserRoleController', {
     init: function(application) {
         this.control({
             "userrolepanel > usergrid": {
-                itemclick: this.userGridItemClick
+                selectionchange: this.userGridSelectionChange
             },
             "userrolepanel > rolegrid button[text='删除']": {
                 click: this.removeRolesFromUser

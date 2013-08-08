@@ -38,6 +38,14 @@ public class Organization extends AbstractPersistable<Long> {
 	
 	private String description;
 	
+	public Organization() {
+		
+	}
+	
+	public Organization(Long id) {
+		this.setId(id);
+	}
+	
 	@Transient
 	private Boolean leaf;
 	

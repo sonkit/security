@@ -17,20 +17,26 @@ Ext.define('Security.controller.OrgaController', {
     extend: 'Ext.app.Controller',
 
     models: [
-        'Orga'
+        'Orga',
+        'User'
     ],
     stores: [
-        'Orga'
+        'Orga',
+        'OrgaUser'
     ],
     views: [
-        'OrgaTree',
-        'OrgaWin'
+        'OrgaWin',
+        'OrgaPanel'
     ],
 
     refs: [
         {
             ref: 'orgaWin',
             selector: 'orgawin'
+        },
+        {
+            ref: 'userGrid',
+            selector: 'tabpanel > orgapanel > gridpanel'
         }
     ],
 
@@ -95,6 +101,17 @@ Ext.define('Security.controller.OrgaController', {
         });
     },
 
+    onOrgaTreeSelectionChange: function(model, selected, eOpts) {
+        var orgaId = selected[0].get('id'),
+            userGrid = this.getUserGrid();
+
+        userGrid.getStore().load({
+            params: {
+                orgaId: orgaId
+            }
+        });
+    },
+
     init: function(application) {
         this.control({
             "orgatree": {
@@ -102,6 +119,9 @@ Ext.define('Security.controller.OrgaController', {
             },
             "orgawin button[text='保存']": {
                 click: this.saveOrga
+            },
+            "orgapanel > orgatree": {
+                selectionchange: this.onOrgaTreeSelectionChange
             }
         });
     }

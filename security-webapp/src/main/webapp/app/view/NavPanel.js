@@ -72,7 +72,7 @@ Ext.define('Security.view.NavPanel', {
                     listeners: {
                         el: {
                             click: function() {
-                                    addTab({controller: 'OrgaController', view: 'orgatree'});
+                                    addTab({controller: 'OrgaController', view: 'orgapanel'});
                                 }
                         }
                     },
