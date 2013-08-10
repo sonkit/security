@@ -106,6 +106,8 @@ Ext.define('Security.controller.OrgaController', {
             userGrid = this.getUserGrid();
 
         userGrid.getStore().load({
+            start: undefined,
+            limit: undefined,
             params: {
                 orgaId: orgaId
             }

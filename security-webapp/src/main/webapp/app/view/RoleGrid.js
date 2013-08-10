@@ -55,12 +55,16 @@ Ext.define('Security.view.RoleGrid', {
                             tooltip: '编辑'
                         },
                         {
+                            xtype: 'button',
+                            text: '删除',
+                            tooltip: '删除'
+                        },
+                        {
                             xtype: 'tbseparator'
                         },
                         {
                             xtype: 'button',
-                            text: '删除',
-                            tooltip: '删除'
+                            text: '角色授权'
                         }
                     ]
                 }

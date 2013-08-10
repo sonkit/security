@@ -26,11 +26,17 @@ public class RescController extends AbstractCrudController<Resource, Long> {
 	protected MyRepository<Resource, Long> getRepository() {
 		return rescRepository;
 	}
-	
+
 	@RequestMapping(value = "findByParentId", method = RequestMethod.GET)
 	protected @ResponseBody
 	List<Resource> findByParentId(@RequestParam("node") long parentId) {
 		return rescRepository.findByParentId(parentId);
+	}
+
+	@RequestMapping(value = "findByRoleId", method = RequestMethod.GET)
+	protected @ResponseBody
+	List<Resource> findByRoleId(long roleId) {
+		return rescRepository.findByRoleId(roleId);
 	}
 
 }

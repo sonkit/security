@@ -13,6 +13,7 @@ import com.wonders.security.core.controller.AbstractCrudController;
 import com.wonders.security.core.repository.MyRepository;
 import com.wonders.security.entity.Role;
 import com.wonders.security.repository.RoleRepository;
+import com.wonders.security.service.RoleService;
 
 @Controller
 @RequestMapping("roles")
@@ -20,6 +21,9 @@ public class RoleController extends AbstractCrudController<Role, Long> {
 
 	@Inject
 	private RoleRepository roleRepository;
+	
+	@Inject
+	private RoleService roleService;
 
 	@Override
 	protected MyRepository<Role, Long> getRepository() {
@@ -29,6 +33,18 @@ public class RoleController extends AbstractCrudController<Role, Long> {
 	@RequestMapping(value = "findByUserId", method = RequestMethod.GET)
 	protected @ResponseBody List<Role> findByUserId(long userId) {
 		return roleRepository.findByUserId(userId);
+	}
+	
+	@RequestMapping(value = "addRescsToRole", method = RequestMethod.PUT)
+	protected @ResponseBody
+	Role addRescsToRole(Long roleId, Long... rescIds) {
+		return roleService.addRescsToRole(roleId, rescIds);
+	}
+
+	@RequestMapping(value = "removeRescsFromRole", method = RequestMethod.PUT)
+	protected @ResponseBody
+	Role removeRescsFromRole(Long roleId, Long... rescIds) {
+		return roleService.removeRescsFromRole(roleId, rescIds);
 	}
 
 }
