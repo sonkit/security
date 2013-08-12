@@ -16,7 +16,8 @@
       <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
     
-    <jpa:repositories base-package="com.wonders.security.**.repository" />
+    <jpa:repositories base-package="com.wonders.security.**.repository"
+        factory-class="com.wonders.security.core.repository.MyRepositoryFactoryBean" />
     
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" 
       p:dataSource-ref="dataSource"

@@ -21,7 +21,7 @@ public class RoleController extends AbstractCrudController<Role, Long> {
 
 	@Inject
 	private RoleRepository roleRepository;
-	
+
 	@Inject
 	private RoleService roleService;
 
@@ -29,22 +29,17 @@ public class RoleController extends AbstractCrudController<Role, Long> {
 	protected MyRepository<Role, Long> getRepository() {
 		return roleRepository;
 	}
-	
+
 	@RequestMapping(value = "findByUserId", method = RequestMethod.GET)
-	protected @ResponseBody List<Role> findByUserId(long userId) {
+	protected @ResponseBody
+	List<Role> findByUserId(long userId) {
 		return roleRepository.findByUserId(userId);
 	}
-	
-	@RequestMapping(value = "addRescsToRole", method = RequestMethod.PUT)
-	protected @ResponseBody
-	Role addRescsToRole(Long roleId, Long... rescIds) {
-		return roleService.addRescsToRole(roleId, rescIds);
-	}
 
-	@RequestMapping(value = "removeRescsFromRole", method = RequestMethod.PUT)
+	@RequestMapping(value = "maintainRoleResc", method = RequestMethod.POST)
 	protected @ResponseBody
-	Role removeRescsFromRole(Long roleId, Long... rescIds) {
-		return roleService.removeRescsFromRole(roleId, rescIds);
+	Role maintainRoleResc(Long roleId, Long... rescIds) {
+		return roleService.maintainRoleResc(roleId, rescIds);
 	}
 
 }

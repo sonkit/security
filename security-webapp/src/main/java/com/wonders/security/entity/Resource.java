@@ -39,6 +39,14 @@ public class Resource extends AbstractPersistable<Long> {
 	@OneToMany(mappedBy = "parent")
 	@JsonIgnore
 	private Set<Resource> children = new HashSet<Resource>();
+	
+	public Resource() {
+		
+	}
+	
+	public Resource(Long id) {
+		this.setId(id);
+	}
 
 	public String getText() {
 		return text;

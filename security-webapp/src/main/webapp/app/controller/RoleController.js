@@ -38,6 +38,10 @@ Ext.define('Security.controller.RoleController', {
         {
             ref: 'roleWin',
             selector: 'rolewin'
+        },
+        {
+            ref: 'roleRescWin',
+            selector: 'rolerescwin'
         }
     ],
 
@@ -99,24 +103,32 @@ Ext.define('Security.controller.RoleController', {
         }
     },
 
-    addRole: function(button, e, eOpts) {
-        Ext.widget('rolewin').show(button);
+    maintainRoleResc: function(button, e, eOpts) {
+        var roleId = this.getRoleGrid().getSelectionModel().getLastSelected().get('id'),
+            win = this.getRoleRescWin(),
+            tree = win.child('resctree'),
+            checkedNodes = tree.getChecked(),
+            rescIds = [];
+
+        Ext.each(checkedNodes, function(node) {
+            rescIds.push(node.get('id'));
+        });
+
+        Ext.Ajax.request({
+            url: 'roles/maintainRoleResc',
+            method: 'POST',
+            params: {
+                roleId: roleId,
+                rescIds: rescIds
+            },
+            success: function(response, opts) {
+                win.close();
+            }
+        });
     },
 
-    editRole: function(button, e, eOpts) {
-        var roleWin = Ext.widget('rolewin'),
-            roleGrid = this.getRoleGrid(),
-            selModel = roleGrid.getSelectionModel();
-
-        if (selModel.hasSelection()) {
-
-            var record = selModel.getLastSelected(),
-                form = roleWin.child('form');
-
-            form.loadRecord(record);
-            roleWin.show(button);
-        }
-
+    addRole: function(button, e, eOpts) {
+        Ext.widget('rolewin').show(button);
     },
 
     saveRole: function(button, e, eOpts) {
@@ -143,6 +155,22 @@ Ext.define('Security.controller.RoleController', {
         });
     },
 
+    editRole: function(button, e, eOpts) {
+        var roleWin = Ext.widget('rolewin'),
+            roleGrid = this.getRoleGrid(),
+            selModel = roleGrid.getSelectionModel();
+
+        if (selModel.hasSelection()) {
+
+            var record = selModel.getLastSelected(),
+                form = roleWin.child('form');
+
+            form.loadRecord(record);
+            roleWin.show(button);
+        }
+
+    },
+
     init: function(application) {
         this.control({
             "tabpanel > rolegrid button[text='删除']": {
@@ -151,17 +179,20 @@ Ext.define('Security.controller.RoleController', {
             "tabpanel > rolegrid button[text='角色授权']": {
                 click: this.roleRescMgr
             },
+            "rolerescwin button[text='确定']": {
+                click: this.maintainRoleResc
+            },
             "tabpanel > rolegrid button[text='添加']": {
                 click: this.addRole
-            },
-            "tabpanel > rolegrid button[text='编辑']": {
-                click: this.editRole
             },
             "rolewin button[text='保存']": {
                 click: this.saveRole
             },
             "rolerescwin > resctree": {
                 checkchange: this.onRescTreeCheckChange
+            },
+            "tabpanel > rolegrid button[text='编辑']": {
+                click: this.editRole
             }
         });
     }

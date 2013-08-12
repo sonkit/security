@@ -76,11 +76,12 @@ Ext.define('Security.view.UserGrid', {
                     xtype: 'toolbar',
                     dock: 'top',
                     items: [
-                        {
-                            xtype: 'button',
-                            text: '查询',
-                            tooltip: '查询'
-                        },
+                        me.processMyTriggerField1({
+                            xtype: 'triggerfield',
+                            width: 220,
+                            fieldLabel: '用户名',
+                            labelWidth: 50
+                        }),
                         {
                             xtype: 'tbseparator'
                         },
@@ -117,6 +118,13 @@ Ext.define('Security.view.UserGrid', {
 
         me.processUserGrid(me);
         me.callParent(arguments);
+    },
+
+    processMyTriggerField1: function(config) {
+        config.xtype = 'searchfield';
+        config.paramName = 'search_username_equal';
+        config.store = Ext.StoreMgr.lookup('User');
+        return config;
     },
 
     processUserGrid: function(config) {

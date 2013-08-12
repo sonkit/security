@@ -36,11 +36,12 @@ Ext.define('Security.view.RoleGrid', {
                     xtype: 'toolbar',
                     dock: 'top',
                     items: [
-                        {
-                            xtype: 'button',
-                            text: '查询',
-                            tooltip: '查询'
-                        },
+                        me.processMyTriggerField2({
+                            xtype: 'triggerfield',
+                            width: 220,
+                            fieldLabel: '名称',
+                            labelWidth: 50
+                        }),
                         {
                             xtype: 'tbseparator'
                         },
@@ -94,6 +95,13 @@ Ext.define('Security.view.RoleGrid', {
 
         me.processRoleGrid(me);
         me.callParent(arguments);
+    },
+
+    processMyTriggerField2: function(config) {
+        config.xtype = 'searchfield';
+        config.paramName = 'search_name_equal';
+        config.store = Ext.StoreMgr.lookup('Role');
+        return config;
     },
 
     processRoleGrid: function(config) {

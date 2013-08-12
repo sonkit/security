@@ -1,6 +1,5 @@
 package com.wonders.security.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class UserService {
 
 		if (user != null) {
 
-			List<Role> roles = (ArrayList<Role>) roleRepository.findAll(Arrays
+			List<Role> roles = (List<Role>) roleRepository.findAll(Arrays
 					.asList(roleIds));
 
 			user.getRoles().addAll(roles);
@@ -45,7 +44,7 @@ public class UserService {
 
 		if (user != null) {
 
-			List<Role> roles = (ArrayList<Role>) roleRepository.findAll(Arrays
+			List<Role> roles = (List<Role>) roleRepository.findAll(Arrays
 					.asList(roleIds));
 
 			user.getRoles().removeAll(roles);
