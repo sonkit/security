@@ -102,16 +102,18 @@ Ext.define('Security.controller.OrgaController', {
     },
 
     onOrgaTreeSelectionChange: function(model, selected, eOpts) {
-        var orgaId = selected[0].get('id'),
-            userGrid = this.getUserGrid();
+        if (selected.length) {    
+            var orgaId = selected[0].get('id'),
+                userGrid = this.getUserGrid();
 
-        userGrid.getStore().load({
-            start: undefined,
-            limit: undefined,
-            params: {
-                orgaId: orgaId
-            }
-        });
+            userGrid.getStore().load({
+                start: undefined,
+                limit: undefined,
+                params: {
+                    orgaId: orgaId
+                }
+            });
+        }
     },
 
     init: function(application) {

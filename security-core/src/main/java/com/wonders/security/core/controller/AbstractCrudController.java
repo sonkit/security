@@ -46,7 +46,8 @@ public abstract class AbstractCrudController<T, ID extends Serializable> {
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	protected @ResponseBody
 	void delete(@PathVariable ID id) {
-		getRepository().delete(id);
+		MyRepository<T, ID> repository = getRepository();
+		repository.delete(repository.findOne(id));
 	}
 	
 	private Map<?, ?> getFilters(Map<String, String> params) {
