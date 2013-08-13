@@ -40,7 +40,8 @@ Ext.define('Security.view.RoleGrid', {
                             xtype: 'triggerfield',
                             width: 220,
                             fieldLabel: '名称',
-                            labelWidth: 50
+                            labelWidth: 40,
+                            emptyText: '请输入一个名称！'
                         }),
                         {
                             xtype: 'tbseparator'
@@ -99,7 +100,7 @@ Ext.define('Security.view.RoleGrid', {
 
     processMyTriggerField2: function(config) {
         config.xtype = 'searchfield';
-        config.paramName = 'search_name_equal';
+        config.paramName = 'search_name_like';
         config.store = Ext.StoreMgr.lookup('Role');
         return config;
     },

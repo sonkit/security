@@ -9,6 +9,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -22,10 +23,13 @@ public class User extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 8964444941371902286L;
 	
+	@NotNull
 	private String username;
 	
+	@NotNull
 	private String loginName;
 	
+	@NotNull
 	private String password;
 	
 	private String userCard;
@@ -34,8 +38,10 @@ public class User extends AbstractPersistable<Long> {
 	
 	private String fax;
 	
+	@NotNull
 	private String sex;
 	
+	@NotNull
 	@ManyToOne(optional = false)
 	private Organization orga;
 	

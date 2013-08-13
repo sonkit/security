@@ -46,7 +46,7 @@ Ext.define('Security.view.MyViewport', {
                     items: [
                         {
                             xtype: 'button',
-                            text: '系统退出'
+                            text: '系统注消'
                         }
                     ]
                 },

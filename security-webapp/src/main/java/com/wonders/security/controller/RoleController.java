@@ -38,7 +38,7 @@ public class RoleController extends AbstractCrudController<Role, Long> {
 
 	@RequestMapping(value = "maintainRoleResc", method = RequestMethod.POST)
 	protected @ResponseBody
-	Role maintainRoleResc(Long roleId, Long... rescIds) {
+	Role maintainRoleResc(long roleId, long... rescIds) {
 		return roleService.maintainRoleResc(roleId, rescIds);
 	}
 

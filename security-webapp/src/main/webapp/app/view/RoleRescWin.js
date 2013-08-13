@@ -52,6 +52,9 @@ Ext.define('Security.view.RoleRescWin', {
                         },
                         {
                             xtype: 'button',
+                            handler: function(button, event) {
+                                button.up('window').close();
+                            },
                             text: '关闭'
                         }
                     ]

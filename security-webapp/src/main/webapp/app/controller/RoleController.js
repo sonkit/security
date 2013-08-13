@@ -50,7 +50,7 @@ Ext.define('Security.controller.RoleController', {
             roleStore = this.getRoleStore();
 
         if (selModel.hasSelection()) {
-            Ext.Msg.confirm('提示', '您确定要删除吗?', function(buttonId) {
+            Ext.Msg.confirm('确认', '您确定要删除吗?', function(buttonId) {
                 if (buttonId == 'yes') {
                     var record = selModel.getLastSelected();
                     Ext.create('Security.model.Role', {

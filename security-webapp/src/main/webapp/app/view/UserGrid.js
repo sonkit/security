@@ -40,29 +40,53 @@ Ext.define('Security.view.UserGrid', {
                 },
                 {
                     xtype: 'gridcolumn',
+                    width: 137,
                     dataIndex: 'sex',
                     text: '性别'
                 },
                 {
                     xtype: 'gridcolumn',
+                    width: 127,
                     dataIndex: 'userCard',
                     text: '用户证号'
                 },
                 {
                     xtype: 'gridcolumn',
+                    width: 130,
                     dataIndex: 'phone',
                     text: '电话'
                 },
                 {
                     xtype: 'gridcolumn',
+                    width: 112,
                     dataIndex: 'fax',
                     text: '传真'
                 },
                 {
                     xtype: 'gridcolumn',
+                    width: 200,
                     dataIndex: 'orgaText',
                     text: '所属组织',
                     flex: 1
+                },
+                {
+                    xtype: 'actioncolumn',
+                    width: 80,
+                    align: 'center',
+                    items: [
+                        {
+                            icon: 'images/edit.png',
+                            tooltip: '编辑用户'
+                        },
+                        {
+                            icon: 'images/delete.gif',
+                            tooltip: '删除用户'
+                        },
+                        {
+                            icon: 'images/edit.png',
+                            tooltip: '修改密码'
+                        }
+                    ]
                 }
             ],
             dockedItems: [
@@ -80,7 +104,8 @@ Ext.define('Security.view.UserGrid', {
                             xtype: 'triggerfield',
                             width: 220,
                             fieldLabel: '用户名',
-                            labelWidth: 50
+                            labelWidth: 50,
+                            emptyText: '请输入一个用户名！'
                         }),
                         {
                             xtype: 'tbseparator'
@@ -89,16 +114,6 @@ Ext.define('Security.view.UserGrid', {
                             xtype: 'button',
                             text: '添加',
                             tooltip: '添加'
-                        },
-                        {
-                            xtype: 'button',
-                            text: '编辑',
-                            tooltip: '编辑'
-                        },
-                        {
-                            xtype: 'button',
-                            text: '删除',
-                            tooltip: '删除'
                         },
                         {
                             xtype: 'tbseparator'
@@ -122,7 +137,7 @@ Ext.define('Security.view.UserGrid', {
 
     processMyTriggerField1: function(config) {
         config.xtype = 'searchfield';
-        config.paramName = 'search_username_equal';
+        config.paramName = 'search_username_like';
         config.store = Ext.StoreMgr.lookup('User');
         return config;
     },
@@ -130,6 +145,7 @@ Ext.define('Security.view.UserGrid', {
     processUserGrid: function(config) {
         if (config.removeDockedItems) {
             config.dockedItems = [];
+            config.columns.pop();
         }
 
     }

@@ -17,7 +17,7 @@ Ext.define('Security.view.UserWin', {
     extend: 'Ext.window.Window',
     alias: 'widget.userwin',
 
-    width: 350,
+    width: 331,
     constrain: true,
     layout: {
         type: 'fit'
@@ -46,19 +46,23 @@ Ext.define('Security.view.UserWin', {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '用户名',
-                            name: 'username'
+                            name: 'username',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '登录名',
-                            name: 'loginName'
+                            name: 'loginName',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '密码',
-                            name: 'password'
+                            name: 'password',
+                            inputType: 'password',
+                            allowBlank: false
                         },
                         {
                             xtype: 'combobox',
@@ -66,6 +70,7 @@ Ext.define('Security.view.UserWin', {
                             fieldLabel: '性别',
                             name: 'sex',
                             value: '男',
+                            allowBlank: false,
                             editable: false,
                             queryMode: 'local',
                             store: [
@@ -95,7 +100,8 @@ Ext.define('Security.view.UserWin', {
                             xtype: 'triggerfield',
                             anchor: '100%',
                             fieldLabel: '组织机构',
-                            name: 'orga.id'
+                            name: 'orga.id',
+                            allowBlank: false
                         })
                     ],
                     dockedItems: [
@@ -109,6 +115,9 @@ Ext.define('Security.view.UserWin', {
                                 },
                                 {
                                     xtype: 'button',
+                                    handler: function(button, event) {
+                                        this.up('window').close();
+                                    },
                                     text: '关闭'
                                 }
                             ]

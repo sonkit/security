@@ -1,5 +1,6 @@
 .x-action-col-cell img {
-  cursor: pointer
+  cursor: pointer;
+  margin-left:2px;
 }
 .msg .x-box-mc {
     font-size:14px;

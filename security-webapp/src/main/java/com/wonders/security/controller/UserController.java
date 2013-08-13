@@ -38,22 +38,21 @@ public class UserController extends AbstractCrudController<User, Long> {
 		user.setPassword(md5(user.getPassword()));
 		return super.add(user);
 	}
-
-	@Override
-	protected @ResponseBody User modify(@RequestBody User user) {
-		user.setPassword(md5(user.getPassword()));
-		return super.modify(user);
+	
+	@RequestMapping(value = "modifyPassword", method = RequestMethod.PUT)
+	protected @ResponseBody User modifyPassword(long userId, String password) {
+		return userService.modifyPassword(userId, md5(password));
 	}
 	
 	@RequestMapping(value = "addRolesToUser", method = RequestMethod.PUT)
 	protected @ResponseBody
-	User addRolesToUser(Long userId, Long... roleIds) {
+	User addRolesToUser(long userId, long... roleIds) {
 		return userService.addRolesToUser(userId, roleIds);
 	}
 
 	@RequestMapping(value = "removeRolesFromUser", method = RequestMethod.PUT)
 	protected @ResponseBody
-	User removeRolesFromUser(Long userId, Long... roleIds) {
+	User removeRolesFromUser(long userId, long... roleIds) {
 		return userService.removeRolesFromUser(userId, roleIds);
 	}
 	

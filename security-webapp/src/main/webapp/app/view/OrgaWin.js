@@ -95,7 +95,10 @@ Ext.define('Security.view.OrgaWin', {
                         },
                         {
                             xtype: 'button',
-                            text: '取消'
+                            handler: function(button, event) {
+                                this.up('window').close();
+                            },
+                            text: '关闭'
                         }
                     ]
                 }

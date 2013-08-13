@@ -89,7 +89,9 @@ class MyRepositoryImpl<T, ID extends Serializable>
 			def prop = ((String) k).substring(0, index)
 			def oper = ((String) k).substring(index + 1)
 			
-			predicates << builder."$oper"(root.get(prop), v)
+			def val = (oper == 'like') ? ('%' + v + '%') : v
+			
+			predicates << builder."$oper"(root.get(prop), val)
 		}
 		
 		if (predicates) {

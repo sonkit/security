@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -21,8 +22,10 @@ public class Role extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -1889052965161052638L;
 
+	@NotNull
 	private String name;
 
+	@NotNull
 	private String code;
 
 	private String description;

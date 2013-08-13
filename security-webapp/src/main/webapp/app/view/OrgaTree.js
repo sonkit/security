@@ -25,6 +25,27 @@ Ext.define('Security.view.OrgaTree', {
     initComponent: function() {
         var me = this;
 
+        Ext.applyIf(me, {
+            tools: [
+                {
+                    xtype: 'tool',
+                    handler: function(event, toolEl, owner, tool) {
+                        owner.up('treepanel').expandAll();
+                    },
+                    tooltip: '全部展开',
+                    type: 'maximize'
+                },
+                {
+                    xtype: 'tool',
+                    handler: function(event, toolEl, owner, tool) {
+                        owner.up('treepanel').collapseAll();
+                    },
+                    tooltip: '全部收缩',
+                    type: 'minimize'
+                }
+            ]
+        });
+
         me.callParent(arguments);
     }
 

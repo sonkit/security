@@ -24,7 +24,8 @@ Ext.define('Security.controller.UserController', {
     ],
     views: [
         'UserGrid',
-        'UserWin'
+        'UserWin',
+        'UserPwdWin'
     ],
 
     refs: [
@@ -35,44 +36,25 @@ Ext.define('Security.controller.UserController', {
         {
             ref: 'userWin',
             selector: 'userwin'
+        },
+        {
+            ref: 'userPwdWin',
+            selector: 'userpwdwin'
         }
     ],
 
-    editUser: function(button, e, eOpts) {
-        var userWin = Ext.widget('userwin'),
-            userGrid = this.getUserGrid(),
-            selModel = userGrid.getSelectionModel();
+    onActioncolumnClick: function(grid, cell, row, col, e, eOpts) {
+        var rec = grid.getStore().getAt(row),
+            action = e.target.getAttribute('class');
 
-        if (selModel.hasSelection()) {
+        this.getUserGrid().getSelectionModel().select(rec);
 
-            var record = selModel.getLastSelected(),
-                form = userWin.child('form');
-
-            form.loadRecord(record);
-            form.getForm().findField('orga.id').setValue(record.get('orga').id);
-            userWin.show(button);
-        }
-
-
-    },
-
-    deleteUser: function(button, e, eOpts) {
-        var selModel = this.getUserGrid().getSelectionModel(),
-            userStore = this.getUserStore();
-
-        if (selModel.hasSelection()) {
-            Ext.Msg.confirm('提示', '您确定要删除吗?', function(buttonId) {
-                if (buttonId == 'yes') {
-                    var record = selModel.getLastSelected();
-                    Ext.create('Security.model.User', {
-                        id: record.get('id')
-                    }).destroy({
-                        success: function() {
-                            userStore.reload();
-                        }
-                    });
-                }
-            });
+        if (action.indexOf("x-action-col-0") != -1) {
+            this.editUser(e);
+        } else if (action.indexOf("x-action-col-1") != -1) {
+            this.deleteUser();
+        } else if (action.indexOf("x-action-col-2") != -1) { 
+            this.modifyUserPassword(e);
         }
     },
 
@@ -89,9 +71,36 @@ Ext.define('Security.controller.UserController', {
 
     },
 
+    saveUserNewPwd: function(button, e, eOpts) {
+        var win = this.getUserPwdWin(),
+            form = win.child('form');
+
+        if (form.isValid()) {
+            var userId = form.getForm().findField('id').getValue(),
+                pwd1 = form.getForm().findField('pwd1').getValue(),
+                pwd2 = form.getForm().findField('pwd2').getValue();
+
+            if (pwd1 != pwd2) {
+                Ext.example.msg('提示', '两次输入的密码不一致，请改正！');
+                return;
+            }
+
+            Ext.Ajax.request({
+                url: 'users/modifyPassword',
+                method: 'PUT',
+                params: {
+                    userId: userId,
+                    password: pwd1
+                },
+                success: function(response, opts) {
+                    win.close();
+                }
+            });
+        }
+    },
+
     addUser: function(button, e, eOpts) {
-        var win = Ext.widget('userwin');
-        win.show(button);
+        Ext.widget('userwin').show(button);
     },
 
     saveUser: function(button, e, eOpts) {
@@ -113,16 +122,59 @@ Ext.define('Security.controller.UserController', {
 
     },
 
+    editUser: function(e) {
+        var userWin = Ext.widget('userwin'),
+            record = this.getUserGrid().getSelectionModel().getLastSelected(),
+            form = userWin.child('form');
+
+        form.loadRecord(record);
+        form.getForm().findField('password').hide();
+        form.getForm().findField('orga.id').setValue(record.get('orga').id);
+
+        userWin.show(e.target);
+    },
+
+    deleteUser: function() {
+        var selModel = this.getUserGrid().getSelectionModel(),
+            userStore = this.getUserStore();
+
+        Ext.Msg.confirm('确认', '您确定要删除吗?', function(buttonId) {
+            if (buttonId == 'yes') {
+                var record = selModel.getLastSelected();
+                Ext.create('Security.model.User', {
+                    id: record.get('id')
+                }).destroy({
+                    success: function() {
+                        userStore.reload();
+                    }
+                });
+            }
+        });
+    },
+
+    modifyUserPassword: function(e) {
+        var userStore = this.getUserStore(),
+            win = Ext.widget('userpwdwin'),
+            form = win.child('form').getForm(),
+            user = this.getUserGrid().getSelectionModel().getLastSelected();
+
+        form.findField('id').setValue(user.get('id'));
+        form.findField('username').setValue(user.get('username'));
+
+        win.show(e.target);
+
+    },
+
     init: function(application) {
         this.control({
-            "usergrid button[text='编辑']": {
-                click: this.editUser
-            },
-            "usergrid button[text='删除']": {
-                click: this.deleteUser
+            "actioncolumn": {
+                click: this.onActioncolumnClick
             },
             "usergrid button[text='用户授权']": {
                 click: this.userRoleMgr
+            },
+            "userpwdwin button[text='保存']": {
+                click: this.saveUserNewPwd
             },
             "usergrid button[text='添加']": {
                 click: this.addUser
