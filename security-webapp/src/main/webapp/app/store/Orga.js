@@ -28,7 +28,7 @@ Ext.define('Security.store.Orga', {
             model: 'Security.model.Orga',
             storeId: 'Orga',
             root: {
-                id: 0,
+                id: 1,
                 text: '组织机构'
             },
             proxy: {

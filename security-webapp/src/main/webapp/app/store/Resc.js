@@ -28,8 +28,8 @@ Ext.define('Security.store.Resc', {
             model: 'Security.model.Resc',
             storeId: 'Rescs',
             root: {
-                id: 0,
-                text: '系统菜单'
+                id: 1,
+                text: '系统资源'
             },
             proxy: {
                 type: 'ajax',
