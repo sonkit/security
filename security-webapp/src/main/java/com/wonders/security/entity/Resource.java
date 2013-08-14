@@ -1,12 +1,12 @@
 package com.wonders.security.entity;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -37,8 +37,9 @@ public class Resource extends AbstractPersistable<Long> {
 	private Resource parent;
 
 	@OneToMany(mappedBy = "parent")
+	@OrderBy
 	@JsonIgnore
-	private Set<Resource> children = new HashSet<Resource>();
+	private Set<Resource> children;
 	
 	public Resource() {
 		

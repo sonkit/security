@@ -2,12 +2,12 @@ package com.wonders.security.entity;
 
 import static javax.persistence.FetchType.LAZY;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -56,8 +56,9 @@ public class Organization extends AbstractPersistable<Long> {
 	private Organization parent;
 	
 	@OneToMany(mappedBy = "parent")
+	@OrderBy
 	@JsonIgnore
-	private Set<Organization> children = new HashSet<Organization>();
+	private Set<Organization> children;
 
 	public String getText() {
 		return text;
