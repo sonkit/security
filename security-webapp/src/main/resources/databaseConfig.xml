@@ -12,7 +12,9 @@
        http://www.springframework.org/schema/jee/spring-jee.xsd">
 
     <beans profile="test">
-      <jdbc:embedded-database id="dataSource" type="H2" />
+      <jdbc:embedded-database id="dataSource" type="H2">
+        <jdbc:script location="classpath:/sql/data.sql" />
+      </jdbc:embedded-database>
     </beans>
 
     <beans profile="dev">
@@ -22,6 +24,10 @@
         p:username="${jdbc.db.username}"
         p:password="${jdbc.db.password}"
       />
+      
+      <jdbc:initialize-database enabled="${initialize-database}">
+        <jdbc:script location="classpath:/sql/data.sql" />
+	  </jdbc:initialize-database>
     </beans>
 
     <beans profile="production">

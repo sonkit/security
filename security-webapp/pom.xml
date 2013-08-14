@@ -82,6 +82,8 @@
     <dependency>
       <groupId>${jdbc.driver.groupId}</groupId>
       <artifactId>${jdbc.driver.artifactId}</artifactId>
+      <version>${jdbc.driver.version}</version>
+      <scope>runtime</scope>
     </dependency>
     <!-- persistence layer end -->
   
@@ -127,6 +129,16 @@
       <artifactId>h2</artifactId>
     </dependency>
     <!-- test end -->
+
+    <!-- embedded jetty server -->
+    <dependency>  
+      <groupId>org.eclipse.jetty</groupId>  
+      <artifactId>jetty-server</artifactId>  
+    </dependency>  
+    <dependency>  
+      <groupId>org.eclipse.jetty</groupId>  
+      <artifactId>jetty-webapp</artifactId>  
+    </dependency>
 
   </dependencies>
 
