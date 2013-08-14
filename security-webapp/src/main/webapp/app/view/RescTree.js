@@ -46,7 +46,12 @@ Ext.define('Security.view.RescTree', {
             ]
         });
 
+        me.processRescTree(me);
         me.callParent(arguments);
+    },
+
+    processRescTree: function(config) {
+        config.store = Ext.create('Security.store.Resc');
     }
 
 });
