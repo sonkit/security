@@ -1,7 +1,9 @@
 package com.wonders.security.controller;
 
 import java.security.MessageDigest;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,6 +41,16 @@ public class UserController extends AbstractCrudController<User, Long> {
 		return super.add(user);
 	}
 	
+	@RequestMapping(value = "isLoginNameUnique", method = RequestMethod.GET, produces = {"application/json"})
+	protected @ResponseBody
+	Map<String, Boolean> isLoginNameUnique(String loginName) {
+		long count = userRepository.isLoginNameUnique(loginName);
+		if (count == 0) { // unique
+			return Collections.singletonMap("success", Boolean.TRUE);
+		}
+		return Collections.singletonMap("success", Boolean.FALSE);
+	}
+	
 	@RequestMapping(value = "modifyPassword", method = RequestMethod.PUT)
 	protected @ResponseBody User modifyPassword(long userId, String password) {
 		return userService.modifyPassword(userId, md5(password));
@@ -70,8 +82,7 @@ public class UserController extends AbstractCrudController<User, Long> {
 			byte[] array = md.digest(source.getBytes("utf-8"));
 
 			for (int i = 0; i < array.length; i++) {
-				sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100)
-						.substring(1, 3));
+				sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

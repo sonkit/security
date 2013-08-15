@@ -45,13 +45,15 @@ Ext.define('Security.view.RescWin', {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '名称',
-                            name: 'text'
+                            name: 'text',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '代码',
-                            name: 'code'
+                            name: 'code',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textareafield',

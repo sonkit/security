@@ -49,31 +49,31 @@ Ext.define('Security.view.OrgaPanel', {
                     columns: [
                         {
                             xtype: 'gridcolumn',
+                            width: 119,
                             dataIndex: 'username',
                             text: '用户名'
                         },
                         {
                             xtype: 'gridcolumn',
+                            width: 125,
                             dataIndex: 'loginName',
                             text: '登录名'
                         },
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'password',
-                            text: '密码'
-                        },
-                        {
-                            xtype: 'gridcolumn',
+                            width: 124,
                             dataIndex: 'sex',
                             text: '性别'
                         },
                         {
                             xtype: 'gridcolumn',
+                            width: 107,
                             dataIndex: 'userCard',
                             text: '用户证号'
                         },
                         {
                             xtype: 'gridcolumn',
+                            width: 116,
                             dataIndex: 'phone',
                             text: '电话'
                         },

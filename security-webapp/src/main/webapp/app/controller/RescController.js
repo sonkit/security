@@ -31,6 +31,10 @@ Ext.define('Security.controller.RescController', {
         {
             ref: 'rescWin',
             selector: 'rescwin'
+        },
+        {
+            ref: 'rescTree',
+            selector: 'resctree'
         }
     ],
 
@@ -42,6 +46,10 @@ Ext.define('Security.controller.RescController', {
                 handler: function(button) {
                     var rescWin = Ext.create('Security.view.RescWin'),
                         form = rescWin.child('form');
+
+                    if (record.isExpandable()) {
+                        record.expand();
+                    }
 
                     form.loadRecord(Ext.create('Security.model.Resc', {
                         parent: {id: record.get('id')}
@@ -55,6 +63,10 @@ Ext.define('Security.controller.RescController', {
                 handler: function(button) {            
                     var rescWin = Ext.create('Security.view.RescWin'),
                         form = rescWin.child('form');
+
+                    if (record.isExpandable()) {
+                        record.expand();
+                    }
 
                     record.set('parent', {id: record.get('parentId')});
 
@@ -83,16 +95,26 @@ Ext.define('Security.controller.RescController', {
         var win = this.getRescWin(),
             form = win.child('form'),
             resc = form.getRecord(),
-            rescStore = this.getRescStore();
+            selectedNode = this.getRescTree().getSelectionModel().getLastSelected();;
 
-        resc.set(form.getValues());
-
-        resc.save({
-            success: function() {
-                rescStore.load();
-                win.close();
-            }
-        });
+        if (form.isValid()) {
+            resc.set(form.getValues());
+            resc.save({
+                success: function() {
+                    if (resc.get('id') != selectedNode.get('id')) {
+                        if (selectedNode.isLeaf()) {                    
+                            selectedNode.set('expandable', true);
+                            selectedNode.set('leaf', false);
+                            selectedNode.appendChild(resc);
+                            selectedNode.expand();
+                        } else {
+                            selectedNode.appendChild(resc);
+                        }
+                    }
+                    win.close();
+                }
+            });
+        }
     },
 
     init: function(application) {

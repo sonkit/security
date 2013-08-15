@@ -37,6 +37,10 @@ Ext.define('Security.controller.OrgaController', {
         {
             ref: 'userGrid',
             selector: 'tabpanel > orgapanel > gridpanel'
+        },
+        {
+            ref: 'orgaTree',
+            selector: 'orgapanel > orgatree'
         }
     ],
 
@@ -48,6 +52,10 @@ Ext.define('Security.controller.OrgaController', {
                 handler: function(button) {
                     var orgaWin = Ext.create('Security.view.OrgaWin'),
                         form = orgaWin.child('form');
+
+                    if (record.isExpandable()) {
+                        record.expand();
+                    }
 
                     form.loadRecord(Ext.create('Security.model.Orga', {
                         parent: {id: record.get('id')}
@@ -62,6 +70,10 @@ Ext.define('Security.controller.OrgaController', {
                     var orgaWin = Ext.create('Security.view.OrgaWin'),
                         form = orgaWin.child('form');
 
+                    if (record.isExpandable()) {
+                        record.expand();
+                    }
+
                     record.set('parent', {id: record.get('parentId')});
 
                     form.loadRecord(record);
@@ -74,7 +86,7 @@ Ext.define('Security.controller.OrgaController', {
                         Ext.create('Security.model.Orga', {
                             id: record.get('id')
                         }).destroy({
-                            success: function() {                        
+                            success: function() {
                                 record.remove();
                             }
                         });
@@ -89,16 +101,27 @@ Ext.define('Security.controller.OrgaController', {
         var win = this.getOrgaWin(),
             form = win.child('form'),
             orga = form.getRecord(),
-            orgaStore = this.getOrgaStore();
+            selectedNode = this.getOrgaTree().getSelectionModel().getLastSelected();
 
-        orga.set(form.getValues());
+        if (form.isValid()) {
+            orga.set(form.getValues());
+            orga.save({
+                success: function() {
+                    if (orga.get('id') != selectedNode.get('id')) {
+                        if (selectedNode.isLeaf()) {                    
+                            selectedNode.set('expandable', true);
+                            selectedNode.set('leaf', false);
+                            selectedNode.appendChild(orga);
+                            selectedNode.expand();
+                        } else {
+                            selectedNode.appendChild(orga);
+                        }
+                    }
+                    win.close();
+                }
+            });
+        }
 
-        orga.save({
-            success: function() {
-                orgaStore.load();
-                win.close();
-            }
-        });
     },
 
     onOrgaTreeSelectionChange: function(model, selected, eOpts) {

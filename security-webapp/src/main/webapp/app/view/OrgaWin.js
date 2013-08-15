@@ -17,7 +17,8 @@ Ext.define('Security.view.OrgaWin', {
     extend: 'Ext.window.Window',
     alias: 'widget.orgawin',
 
-    width: 363,
+    height: 329,
+    width: 352,
     layout: {
         type: 'fit'
     },
@@ -45,13 +46,15 @@ Ext.define('Security.view.OrgaWin', {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '名称',
-                            name: 'text'
+                            name: 'text',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '代码',
-                            name: 'code'
+                            name: 'code',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textfield',
@@ -60,10 +63,20 @@ Ext.define('Security.view.OrgaWin', {
                             name: 'districtCode'
                         },
                         {
-                            xtype: 'textfield',
+                            xtype: 'combobox',
                             anchor: '100%',
                             fieldLabel: '组织类型',
-                            name: 'orgaType'
+                            name: 'orgaType',
+                            allowBlank: false,
+                            editable: false,
+                            forceSelection: true,
+                            queryMode: 'local',
+                            store: [
+                                '省级机构',
+                                '市级机构',
+                                '县级机构',
+                                '部门'
+                            ]
                         },
                         {
                             xtype: 'textfield',
@@ -78,10 +91,6 @@ Ext.define('Security.view.OrgaWin', {
                             name: 'description'
                         }
                     ]
-                },
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Label'
                 }
             ],
             dockedItems: [

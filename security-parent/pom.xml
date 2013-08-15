@@ -26,7 +26,7 @@
     <jdbc.db.username>sa</jdbc.db.username>
     <jdbc.db.password/>
     
-    <initialize-database>false</initialize-database>
+    <initialize-database>true</initialize-database>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -266,7 +266,6 @@
     <profile>
       <id>mysql</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
         <property>
           <name>database</name>
           <value>mysql</value>
@@ -281,6 +280,8 @@
         <jdbc.db.url>jdbc:mysql:///${project.artifactId}?createDatabaseIfNotExist=true</jdbc.db.url>
         <jdbc.db.username>root</jdbc.db.username>
         <jdbc.db.password/>
+
+        <initialize-database>false</initialize-database>
       </properties>
     </profile>
 
@@ -301,6 +302,8 @@
         <jdbc.db.url>jdbc:db2://192.168.1.59:50000/testdb</jdbc.db.url>
         <jdbc.db.username>db2admin</jdbc.db.username>
         <jdbc.db.password>zjyg_123</jdbc.db.password>
+
+        <initialize-database>false</initialize-database>
       </properties>
       <dependencies>
         <dependency>
@@ -316,10 +319,6 @@
 
       <id>executable-war</id>
       
-      <properties>
-        <initialize-database>true</initialize-database>
-      </properties>
-
       <build>
 
         <plugins>

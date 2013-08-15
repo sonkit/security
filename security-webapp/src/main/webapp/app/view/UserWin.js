@@ -62,7 +62,8 @@ Ext.define('Security.view.UserWin', {
                             fieldLabel: '密码',
                             name: 'password',
                             inputType: 'password',
-                            allowBlank: false
+                            allowBlank: false,
+                            minLength: 3
                         },
                         {
                             xtype: 'combobox',

@@ -40,6 +40,14 @@ Ext.define('Security.model.Orga', {
         },
         {
             name: 'parent'
+        },
+        {
+            name: 'parentId',
+            persist: false
+        },
+        {
+            name: 'leaf',
+            persist: false
         }
     ],
 

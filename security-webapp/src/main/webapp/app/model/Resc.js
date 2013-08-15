@@ -31,6 +31,14 @@ Ext.define('Security.model.Resc', {
         },
         {
             name: 'parent'
+        },
+        {
+            name: 'parentId',
+            persist: false
+        },
+        {
+            name: 'leaf',
+            persist: false
         }
     ],
 

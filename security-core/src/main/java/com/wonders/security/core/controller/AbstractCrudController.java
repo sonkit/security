@@ -2,6 +2,7 @@ package com.wonders.security.core.controller;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -52,18 +53,20 @@ public abstract class AbstractCrudController<T, ID extends Serializable> {
 	}
 	
 	private Map<?, ?> getFilters(Map<String, String> params) {
-		Map<String, String> searchParams = new TreeMap<String, String>();
+		Map<String, String> filters = new TreeMap<String, String>();
 		for (String key : params.keySet()) {
 			if (key.startsWith("search_")) {
 				String name = key.substring(key.indexOf("_") + 1);
 				String value = params.get(key);
-				try {
-					value = new String(value.getBytes(), "UTF-8");
-				} catch (UnsupportedEncodingException e) {}
-				searchParams.put(name, value);
+				if (!"UTF-8".equals(Charset.defaultCharset().name())) {
+					try {
+						value = new String(value.getBytes("ISO-8859-1"), "UTF-8");
+					} catch (UnsupportedEncodingException e) {}
+				}
+				filters.put(name, value);
 			}
 		}
-		return searchParams;
+		return filters;
 	}
 
 }

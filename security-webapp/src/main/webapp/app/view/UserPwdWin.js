@@ -52,13 +52,15 @@ Ext.define('Security.view.UserPwdWin', {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '新密码1',
-                            name: 'pwd1'
+                            name: 'pwd1',
+                            minLength: 3
                         },
                         {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '新密码2',
-                            name: 'pwd2'
+                            name: 'pwd2',
+                            minLength: 3
                         }
                     ]
                 }

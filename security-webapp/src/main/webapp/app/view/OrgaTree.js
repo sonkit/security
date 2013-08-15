@@ -30,6 +30,14 @@ Ext.define('Security.view.OrgaTree', {
                 {
                     xtype: 'tool',
                     handler: function(event, toolEl, owner, tool) {
+                        owner.up('treepanel').getStore().load();
+                    },
+                    tooltip: '刷新',
+                    type: 'refresh'
+                },
+                {
+                    xtype: 'tool',
+                    handler: function(event, toolEl, owner, tool) {
                         owner.up('treepanel').expandAll();
                     },
                     tooltip: '全部展开',

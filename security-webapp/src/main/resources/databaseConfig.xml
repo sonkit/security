@@ -13,7 +13,7 @@
 
     <beans profile="test">
       <jdbc:embedded-database id="dataSource" type="H2">
-        <jdbc:script location="classpath:/sql/data.sql" />
+        <jdbc:script location="classpath:/sql/data.sql" encoding="UTF-8" />
       </jdbc:embedded-database>
     </beans>
 
@@ -26,8 +26,8 @@
       />
       
       <jdbc:initialize-database enabled="${initialize-database}">
-        <jdbc:script location="classpath:/sql/data.sql" />
-	  </jdbc:initialize-database>
+        <jdbc:script location="classpath:/sql/data.sql" encoding="UTF-8" />
+      </jdbc:initialize-database>
     </beans>
 
     <beans profile="production">

@@ -93,6 +93,7 @@ Ext.define('Security.controller.UserController', {
                     password: pwd1
                 },
                 success: function(response, opts) {
+                    Ext.example.msg('提示', '用户密码修改成功！');
                     win.close();
                 }
             });
@@ -109,6 +110,29 @@ Ext.define('Security.controller.UserController', {
             form = userWin.child('form');
 
         if (form.isValid()) {
+
+            var loginNameField = form.getForm().findField('loginName');
+
+            if (!loginNameField.readOnly) {
+                Ext.Ajax.request({
+                    url: 'users/isLoginNameUnique',
+                    method: 'GET',
+                    params: {loginName: loginNameField.getValue()},
+                    success: function(response, opts) {
+                        var o = Ext.decode(response.responseText);
+                        if (!o.success) {
+                            loginNameField.markInvalid('用户登陆录名已存在！');
+                            return;
+                        }
+                        doSave();
+                    }
+                });
+            } else {
+                doSave();
+            }
+        }
+
+        function doSave() {
             var user = Ext.create('Security.model.User', form.getValues());
             user.set('orga', {id: form.getForm().findField('orga.id').getValue()});
             user.save({
@@ -119,7 +143,6 @@ Ext.define('Security.controller.UserController', {
                 }
             });
         }
-
     },
 
     editUser: function(e) {
@@ -128,6 +151,7 @@ Ext.define('Security.controller.UserController', {
             form = userWin.child('form');
 
         form.loadRecord(record);
+        form.getForm().findField('loginName').readOnly = true;
         form.getForm().findField('password').hide();
         form.getForm().findField('orga.id').setValue(record.get('orga').id);
 

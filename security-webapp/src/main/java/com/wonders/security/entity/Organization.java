@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -38,6 +37,14 @@ public class Organization extends AbstractPersistable<Long> {
 	
 	private String description;
 	
+	@ManyToOne(fetch = LAZY)
+	private Organization parent;
+	
+	@OneToMany(mappedBy = "parent")
+	@OrderBy("text")
+	@JsonIgnore
+	private Set<Organization> children;
+	
 	public Organization() {
 		
 	}
@@ -45,20 +52,6 @@ public class Organization extends AbstractPersistable<Long> {
 	public Organization(Long id) {
 		this.setId(id);
 	}
-	
-	@Transient
-	private Boolean leaf;
-	
-	@Transient
-	private Long parentId;
-	
-	@ManyToOne(fetch = LAZY)
-	private Organization parent;
-	
-	@OneToMany(mappedBy = "parent")
-	@OrderBy
-	@JsonIgnore
-	private Set<Organization> children;
 
 	public String getText() {
 		return text;
@@ -113,18 +106,6 @@ public class Organization extends AbstractPersistable<Long> {
 			return children == null || children.isEmpty();
 		}
 		return null;
-	}
-	
-	public void setLeaf(Boolean leaf) {
-		this.leaf = leaf;
-	}
-	
-	public Long getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
 	}
 	
 	public Organization getParent() {
