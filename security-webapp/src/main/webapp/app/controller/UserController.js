@@ -87,7 +87,6 @@ Ext.define('Security.controller.UserController', {
 
             Ext.Ajax.request({
                 url: 'users/modifyPassword',
-                method: 'PUT',
                 params: {
                     userId: userId,
                     password: pwd1

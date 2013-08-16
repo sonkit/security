@@ -41,7 +41,7 @@ public class UserController extends AbstractCrudController<User, Long> {
 		return super.add(user);
 	}
 	
-	@RequestMapping(value = "isLoginNameUnique", method = RequestMethod.GET, produces = {"application/json"})
+	@RequestMapping(value = "isLoginNameUnique", method = RequestMethod.GET)
 	protected @ResponseBody
 	Map<String, Boolean> isLoginNameUnique(String loginName) {
 		long count = userRepository.isLoginNameUnique(loginName);
@@ -51,18 +51,18 @@ public class UserController extends AbstractCrudController<User, Long> {
 		return Collections.singletonMap("success", Boolean.FALSE);
 	}
 	
-	@RequestMapping(value = "modifyPassword", method = RequestMethod.PUT)
+	@RequestMapping(value = "modifyPassword", method = RequestMethod.POST)
 	protected @ResponseBody User modifyPassword(long userId, String password) {
 		return userService.modifyPassword(userId, md5(password));
 	}
 	
-	@RequestMapping(value = "addRolesToUser", method = RequestMethod.PUT)
+	@RequestMapping(value = "addRolesToUser", method = RequestMethod.POST)
 	protected @ResponseBody
 	User addRolesToUser(long userId, long... roleIds) {
 		return userService.addRolesToUser(userId, roleIds);
 	}
 
-	@RequestMapping(value = "removeRolesFromUser", method = RequestMethod.PUT)
+	@RequestMapping(value = "removeRolesFromUser", method = RequestMethod.POST)
 	protected @ResponseBody
 	User removeRolesFromUser(long userId, long... roleIds) {
 		return userService.removeRolesFromUser(userId, roleIds);

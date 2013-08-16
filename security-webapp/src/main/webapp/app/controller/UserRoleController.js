@@ -26,14 +26,18 @@ Ext.define('Security.controller.UserRoleController', {
     ],
 
     userGridSelectionChange: function(model, selected, eOpts) {
-        var userId = selected[0].get('id'),
-            roleGrid = Ext.ComponentQuery.query('userrolepanel').pop().child('rolegrid'),
-            roleStore = roleGrid.getStore();
+        if (selected.length) {
 
-        roleStore.getProxy().url = 'roles/findByUserId';
-        roleStore.getProxy().setExtraParam('userId', userId);
+            var userId = selected[0].get('id'),
+                roleGrid = Ext.ComponentQuery.query('userrolepanel').pop().child('rolegrid'),
+                roleStore = roleGrid.getStore();
 
-        roleStore.load();
+            roleStore.getProxy().url = 'roles/findByUserId';
+            roleStore.getProxy().setExtraParam('userId', userId);
+
+            roleStore.load();
+
+        }
     },
 
     removeRolesFromUser: function(button, e, eOpts) {
@@ -56,7 +60,6 @@ Ext.define('Security.controller.UserRoleController', {
 
             Ext.Ajax.request({
                 url: 'users/removeRolesFromUser',
-                method: 'PUT',
                 params: {
                     'userId': userId,
                     'roleIds': roleIds
@@ -95,7 +98,6 @@ Ext.define('Security.controller.UserRoleController', {
 
             Ext.Ajax.request({
                 url: 'users/addRolesToUser',
-                method: 'PUT',
                 params: {
                     'userId': userId,
                     'roleIds': roleIds
