@@ -26,9 +26,9 @@ public class OrgaController extends AbstractCrudController<Organization, Long> {
 	protected MyRepository<Organization, Long> getRepository() {
 		return orgaRepository;
 	}
-	
+
 	@RequestMapping(value = "findByParentId", method = RequestMethod.GET)
-	protected @ResponseBody
+	@ResponseBody
 	List<Organization> findByParentId(@RequestParam("node") long parentId) {
 		return orgaRepository.findByParentId(parentId);
 	}

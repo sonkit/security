@@ -24,12 +24,12 @@ Ext.define('Security.store.Orga', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: true,
             model: 'Security.model.Orga',
             storeId: 'Orga',
             root: {
                 id: 1,
-                text: '组织机构'
+                text: '组织机构',
+                expanded: true
             },
             proxy: {
                 type: 'ajax',

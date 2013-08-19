@@ -25,15 +25,15 @@ Ext.define('Security.controller.RoleController', {
         'Resc'
     ],
     views: [
-        'RoleGrid',
         'RoleWin',
-        'RoleRescWin'
+        'RoleRescWin',
+        'RoleRescPanel'
     ],
 
     refs: [
         {
             ref: 'roleGrid',
-            selector: 'tabpanel > rolegrid'
+            selector: 'rolerescpanel > rolegrid'
         },
         {
             ref: 'roleWin',
@@ -104,7 +104,8 @@ Ext.define('Security.controller.RoleController', {
     },
 
     maintainRoleResc: function(button, e, eOpts) {
-        var roleId = this.getRoleGrid().getSelectionModel().getLastSelected().get('id'),
+        var sm = this.getRoleGrid().getSelectionModel(),
+            roleId = sm.getLastSelected().get('id'),
             win = this.getRoleRescWin(),
             tree = win.child('resctree'),
             checkedNodes = tree.getChecked(),
@@ -122,9 +123,47 @@ Ext.define('Security.controller.RoleController', {
                 rescIds: rescIds
             },
             success: function(response, opts) {
+                var tree = Ext.ComponentQuery.query('rolerescpanel > resctree').pop();
+                tree.expandAll();
+                tree.getRootNode().cascadeBy(function(node) {
+                    if (Ext.Array.contains(rescIds, node.get('id'))) {
+                        node.set('checked', true);
+                    } else {
+                        node.set('checked', false);
+                    }
+                });
                 win.close();
             }
         });
+    },
+
+    onGridpanelSelectionChange: function(model, selected, eOpts) {
+        if (selected.length) {
+            var roleId = selected[0].get('id');
+
+            Ext.Ajax.request({
+                url: 'rescs/findByRoleId',
+                method: 'GET',
+                params: {roleId: roleId},
+                success: function(response, opts) {
+                    var rescs = Ext.decode(response.responseText),
+                        rescIds = [];
+
+                    Ext.each(rescs, function(resc) {
+                        rescIds.push(resc.id);
+                    });
+
+                    var tree = Ext.ComponentQuery.query('rolerescpanel > resctree').pop();
+                    tree.getRootNode().cascadeBy(function(node) {
+                        if (Ext.Array.contains(rescIds, node.get('id'))) {
+                            node.set('checked', true);
+                        } else {
+                            node.set('checked', false);
+                        }
+                    });
+                }
+            });
+        }
     },
 
     addRole: function(button, e, eOpts) {
@@ -173,16 +212,19 @@ Ext.define('Security.controller.RoleController', {
 
     init: function(application) {
         this.control({
-            "tabpanel > rolegrid button[text='删除']": {
+            "rolerescpanel > rolegrid button[text='删除']": {
                 click: this.deleteRole
             },
-            "tabpanel > rolegrid button[text='角色授权']": {
+            "rolerescpanel > rolegrid button[text='角色授权']": {
                 click: this.roleRescMgr
             },
             "rolerescwin button[text='确定']": {
                 click: this.maintainRoleResc
             },
-            "tabpanel > rolegrid button[text='添加']": {
+            "rolerescpanel > rolegrid": {
+                selectionchange: this.onGridpanelSelectionChange
+            },
+            "rolerescpanel > rolegrid button[text='添加']": {
                 click: this.addRole
             },
             "rolewin button[text='保存']": {
@@ -191,7 +233,7 @@ Ext.define('Security.controller.RoleController', {
             "rolerescwin > resctree": {
                 checkchange: this.onRescTreeCheckChange
             },
-            "tabpanel > rolegrid button[text='编辑']": {
+            "rolerescpanel > rolegrid button[text='编辑']": {
                 click: this.editRole
             }
         });

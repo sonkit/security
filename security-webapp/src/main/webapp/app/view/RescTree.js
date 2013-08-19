@@ -18,7 +18,7 @@ Ext.define('Security.view.RescTree', {
     alias: 'widget.resctree',
 
     bodyPadding: 5,
-    title: '系统资源',
+    title: '系统资源管理',
     store: 'Resc',
     useArrows: true,
 
@@ -27,6 +27,13 @@ Ext.define('Security.view.RescTree', {
 
         Ext.applyIf(me, {
             tools: [
+                {
+                    xtype: 'tool',
+                    handler: function(event, toolEl, owner, tool) {
+                        owner.up('treepanel').getStore().load();
+                    },
+                    type: 'refresh'
+                },
                 {
                     xtype: 'tool',
                     handler: function(event, toolEl, owner, tool) {
@@ -51,7 +58,17 @@ Ext.define('Security.view.RescTree', {
     },
 
     processRescTree: function(config) {
-        config.store = Ext.create('Security.store.Resc');
+        if (!config.checkedTree) {
+            config.store = Ext.create('Security.store.Resc');
+            return;
+        }
+        config.store = Ext.create('Security.store.Resc', {
+            proxy: {
+                type: 'ajax',
+                extraParams: {checkedTree: true},
+                url: 'rescs/findByParentId'
+            }
+        });
     }
 
 });

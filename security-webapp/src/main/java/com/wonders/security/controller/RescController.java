@@ -28,13 +28,24 @@ public class RescController extends AbstractCrudController<Resource, Long> {
 	}
 
 	@RequestMapping(value = "findByParentId", method = RequestMethod.GET)
-	protected @ResponseBody
-	List<Resource> findByParentId(@RequestParam("node") long parentId) {
-		return rescRepository.findByParentId(parentId);
+	@ResponseBody
+	List<Resource> findByParentId(@RequestParam("node") long parentId,
+			Boolean checkedTree) {
+
+		List<Resource> rescs = rescRepository.findByParentId(parentId);
+		
+		if (checkedTree != null && checkedTree == Boolean.TRUE) {
+			for (Resource r : rescs) {
+				r.setChecked(Boolean.FALSE);
+			}
+			return rescs;
+		}
+
+		return rescs;
 	}
 
 	@RequestMapping(value = "findByRoleId", method = RequestMethod.GET)
-	protected @ResponseBody
+	@ResponseBody
 	List<Resource> findByRoleId(long roleId) {
 		return rescRepository.findByRoleId(roleId);
 	}

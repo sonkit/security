@@ -13,11 +13,13 @@
 
     <beans profile="test">
       <jdbc:embedded-database id="dataSource" type="H2">
-        <jdbc:script location="classpath:/sql/data.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/sql/h2/schema.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/sql/h2/data.sql" encoding="UTF-8" />
       </jdbc:embedded-database>
     </beans>
 
     <beans profile="dev">
+    
       <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource" 
         p:driverClass="${jdbc.db.driver}"
         p:url="${jdbc.db.url}"
@@ -25,9 +27,11 @@
         p:password="${jdbc.db.password}"
       />
       
-      <jdbc:initialize-database enabled="${initialize-database}">
-        <jdbc:script location="classpath:/sql/data.sql" encoding="UTF-8" />
+      <jdbc:initialize-database enabled="${init.db}" ignore-failures="ALL">
+        <jdbc:script location="classpath:/sql/${db.name}/schema.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/sql/${db.name}/data.sql" encoding="UTF-8" />
       </jdbc:initialize-database>
+      
     </beans>
 
     <beans profile="production">

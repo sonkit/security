@@ -42,7 +42,7 @@ public class UserController extends AbstractCrudController<User, Long> {
 	}
 	
 	@RequestMapping(value = "isLoginNameUnique", method = RequestMethod.GET)
-	protected @ResponseBody
+	@ResponseBody
 	Map<String, Boolean> isLoginNameUnique(String loginName) {
 		long count = userRepository.isLoginNameUnique(loginName);
 		if (count == 0) { // unique
@@ -52,24 +52,25 @@ public class UserController extends AbstractCrudController<User, Long> {
 	}
 	
 	@RequestMapping(value = "modifyPassword", method = RequestMethod.POST)
-	protected @ResponseBody User modifyPassword(long userId, String password) {
-		return userService.modifyPassword(userId, md5(password));
+	@ResponseBody
+	void modifyPassword(long userId, String password) {
+		userService.modifyPassword(userId, md5(password));
 	}
 	
 	@RequestMapping(value = "addRolesToUser", method = RequestMethod.POST)
-	protected @ResponseBody
+	@ResponseBody
 	User addRolesToUser(long userId, long... roleIds) {
 		return userService.addRolesToUser(userId, roleIds);
 	}
 
 	@RequestMapping(value = "removeRolesFromUser", method = RequestMethod.POST)
-	protected @ResponseBody
+	@ResponseBody
 	User removeRolesFromUser(long userId, long... roleIds) {
 		return userService.removeRolesFromUser(userId, roleIds);
 	}
 	
 	@RequestMapping(value = "findByOrgaId", method = RequestMethod.GET)
-	protected @ResponseBody
+	@ResponseBody
 	List<User> findByOrgaId(long orgaId) {
 		Organization orga = new Organization(orgaId);
 		return userRepository.findByOrga(orga);

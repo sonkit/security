@@ -38,7 +38,8 @@ Ext.define('Security.view.OrgaPanel', {
                     width: 334
                 },
                 {
-                    xtype: 'splitter'
+                    xtype: 'splitter',
+                    size: 4
                 },
                 {
                     xtype: 'gridpanel',

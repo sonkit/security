@@ -20,15 +20,8 @@ class UserService {
 	@Inject
 	RoleRepository roleRepository
 
-	User modifyPassword(long userId, String newPassword) {
-
-		def user = userRepository.findOne(userId)
-
-		if (user) {
-			user.password = newPassword
-		}
-
-		user
+	void modifyPassword(long userId, String password) {
+		userRepository.modifyPassword(userId, password)
 	}
 
 	User addRolesToUser(long userId, long... roleIds) {
@@ -58,4 +51,5 @@ class UserService {
 
 		user
 	}
+	
 }

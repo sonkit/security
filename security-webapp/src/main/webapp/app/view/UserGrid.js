@@ -17,7 +17,7 @@ Ext.define('Security.view.UserGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.usergrid',
 
-    title: '用户列表',
+    title: '用户管理',
     columnLines: true,
     store: 'User',
 

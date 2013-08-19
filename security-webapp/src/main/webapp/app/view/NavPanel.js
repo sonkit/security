@@ -57,7 +57,7 @@ Ext.define('Security.view.NavPanel', {
                     listeners: {
                         el: {
                             click: function() {
-                                	addTab({controller: 'RoleController', view: 'rolegrid'});
+                                	addTab({controller: 'RoleController', view: 'rolerescpanel'});
                                 }
                         }
                     },

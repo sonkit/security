@@ -31,13 +31,13 @@ public class RoleController extends AbstractCrudController<Role, Long> {
 	}
 
 	@RequestMapping(value = "findByUserId", method = RequestMethod.GET)
-	protected @ResponseBody
+	@ResponseBody
 	List<Role> findByUserId(long userId) {
 		return roleRepository.findByUserId(userId);
 	}
 
 	@RequestMapping(value = "maintainRoleResc", method = RequestMethod.POST)
-	protected @ResponseBody
+	@ResponseBody
 	Role maintainRoleResc(long roleId, long... rescIds) {
 		return roleService.maintainRoleResc(roleId, rescIds);
 	}

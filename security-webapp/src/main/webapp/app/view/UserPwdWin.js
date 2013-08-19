@@ -53,6 +53,7 @@ Ext.define('Security.view.UserPwdWin', {
                             anchor: '100%',
                             fieldLabel: '新密码1',
                             name: 'pwd1',
+                            inputType: 'password',
                             minLength: 3
                         },
                         {
@@ -60,6 +61,7 @@ Ext.define('Security.view.UserPwdWin', {
                             anchor: '100%',
                             fieldLabel: '新密码2',
                             name: 'pwd2',
+                            inputType: 'password',
                             minLength: 3
                         }
                     ]

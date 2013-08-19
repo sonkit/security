@@ -26,7 +26,8 @@
     <jdbc.db.username>sa</jdbc.db.username>
     <jdbc.db.password/>
     
-    <initialize-database>true</initialize-database>
+    <db.name>h2</db.name>
+    <init.db>true</init.db>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -281,7 +282,8 @@
         <jdbc.db.username>root</jdbc.db.username>
         <jdbc.db.password/>
 
-        <initialize-database>false</initialize-database>
+        <db.name>mysql</db.name>
+        <init.db>false</init.db>
       </properties>
     </profile>
 
@@ -303,7 +305,8 @@
         <jdbc.db.username>db2admin</jdbc.db.username>
         <jdbc.db.password>zjyg_123</jdbc.db.password>
 
-        <initialize-database>false</initialize-database>
+        <db.name>db2</db.name>
+        <init.db>false</init.db>
       </properties>
       <dependencies>
         <dependency>

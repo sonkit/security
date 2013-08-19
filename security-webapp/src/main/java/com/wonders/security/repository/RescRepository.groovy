@@ -8,10 +8,10 @@ import com.wonders.security.entity.Resource
 
 interface RescRepository extends MyRepository<Resource, Long> {
 	
-	@Query("select distinct(r) from Resource r left join fetch r.children where r.parent.id = :parentId")
-	List<Resource> findByParentId(@Param("parentId") Long parentId)
+	@Query('select distinct(r) from Resource r left join fetch r.children where r.parent.id = :parentId')
+	List<Resource> findByParentId(@Param('parentId') Long parentId)
 	
-	@Query("select r.rescs from Role r where r.id = :roleId")
-	List<Resource> findByRoleId(@Param("roleId") Long roleId)
+	@Query('select r.rescs from Role r where r.id = :roleId')
+	List<Resource> findByRoleId(@Param('roleId') Long roleId)
 
 }

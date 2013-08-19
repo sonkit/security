@@ -8,11 +8,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "sec_resc")
@@ -33,6 +35,10 @@ public class Resource extends AbstractPersistable<Long> {
 	@OrderBy("text")
 	@JsonIgnore
 	private Set<Resource> children;
+	
+	@Transient
+	@JsonProperty
+	private Boolean checked;
 	
 	public Resource() {
 		
@@ -87,6 +93,14 @@ public class Resource extends AbstractPersistable<Long> {
 
 	public void setChildren(Set<Resource> children) {
 		this.children = children;
+	}
+
+	public Boolean getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
 	}
 
 }

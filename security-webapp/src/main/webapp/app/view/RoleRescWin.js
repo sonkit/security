@@ -38,7 +38,8 @@ Ext.define('Security.view.RoleRescWin', {
             items: [
                 {
                     xtype: 'resctree',
-                    autoScroll: true
+                    autoScroll: true,
+                    title: '系统资源'
                 }
             ],
             dockedItems: [

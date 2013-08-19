@@ -17,7 +17,8 @@ Ext.define('Security.view.RoleWin', {
     extend: 'Ext.window.Window',
     alias: 'widget.rolewin',
 
-    width: 350,
+    height: 226,
+    width: 317,
     constrain: true,
     layout: {
         type: 'fit'

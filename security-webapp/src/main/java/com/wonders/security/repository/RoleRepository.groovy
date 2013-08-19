@@ -8,7 +8,7 @@ import com.wonders.security.entity.Role
 
 interface RoleRepository extends MyRepository<Role, Long> {
 	
-	@Query("select u.roles from User u where u.id = :userId")
-	List<Role> findByUserId(@Param("userId") Long userId)
+	@Query('select u.roles from User u where u.id = :userId')
+	List<Role> findByUserId(@Param('userId') Long userId)
 	
 }

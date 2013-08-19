@@ -24,12 +24,12 @@ Ext.define('Security.store.Resc', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: true,
             model: 'Security.model.Resc',
             storeId: 'Rescs',
             root: {
                 id: 1,
-                text: '系统资源'
+                text: '系统资源',
+                expanded: true
             },
             proxy: {
                 type: 'ajax',
