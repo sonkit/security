@@ -106,15 +106,15 @@ Ext.define('Security.controller.OrgaController', {
         if (form.isValid()) {
             orga.set(form.getValues());
             orga.save({
-                success: function() {
-                    if (orga.get('id') != selectedNode.get('id')) {
+                success: function(organization) {
+                    if (organization.get('id') != selectedNode.get('id')) {
                         if (selectedNode.isLeaf()) {                    
                             selectedNode.set('expandable', true);
                             selectedNode.set('leaf', false);
-                            selectedNode.appendChild(orga);
+                            selectedNode.appendChild(organization);
                             selectedNode.expand();
                         } else {
-                            selectedNode.appendChild(orga);
+                            selectedNode.appendChild(organization);
                         }
                     }
                     win.close();

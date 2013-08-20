@@ -100,15 +100,15 @@ Ext.define('Security.controller.RescController', {
         if (form.isValid()) {
             resc.set(form.getValues());
             resc.save({
-                success: function() {
-                    if (resc.get('id') != selectedNode.get('id')) {
+                success: function(resource) {
+                    if (resource.get('id') != selectedNode.get('id')) {
                         if (selectedNode.isLeaf()) {                    
                             selectedNode.set('expandable', true);
                             selectedNode.set('leaf', false);
-                            selectedNode.appendChild(resc);
+                            selectedNode.appendChild(resource);
                             selectedNode.expand();
                         } else {
-                            selectedNode.appendChild(resc);
+                            selectedNode.appendChild(resource);
                         }
                     }
                     win.close();
