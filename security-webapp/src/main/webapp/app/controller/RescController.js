@@ -34,7 +34,7 @@ Ext.define('Security.controller.RescController', {
         },
         {
             ref: 'rescTree',
-            selector: 'resctree'
+            selector: 'tabpanel > resctree'
         }
     ],
 
@@ -95,7 +95,7 @@ Ext.define('Security.controller.RescController', {
         var win = this.getRescWin(),
             form = win.child('form'),
             resc = form.getRecord(),
-            selectedNode = this.getRescTree().getSelectionModel().getLastSelected();;
+            selectedNode = this.getRescTree().getSelectionModel().getLastSelected();
 
         if (form.isValid()) {
             resc.set(form.getValues());
