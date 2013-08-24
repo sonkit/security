@@ -105,22 +105,48 @@ Ext.define('Security.controller.OrgaController', {
             selectedNode = this.getOrgaTree().getSelectionModel().getLastSelected();
 
         if (form.isValid()) {
-            orga.set(form.getValues());
-            orga.save({
-                success: function(organization) {
-                    if (organization.get('id') != selectedNode.get('id')) {
-                        if (selectedNode.isLeaf()) {                    
-                            selectedNode.set('expandable', true);
-                            selectedNode.set('leaf', false);
-                            selectedNode.appendChild(organization);
-                            selectedNode.expand();
-                        } else {
-                            selectedNode.appendChild(organization);
+
+            var codeField = form.getForm().findField('code');
+
+            if (!codeField.readOnly) {
+                Ext.Ajax.request({
+                    url: 'orgas/isPropertyUnique',
+                    method: 'GET',
+                    params: {
+                        propertyName: 'code',
+                        value: codeField.getValue()
+                    },
+                    success: function(response, opts) {
+                        var o = Ext.decode(response.responseText);
+                        if (!o.unique) {
+                            codeField.markInvalid('组织机构代码已存在！');
+                            return;
                         }
+                        doSave();
                     }
-                    win.close();
-                }
-            });
+                });
+            } else {
+                doSave();   
+            }
+
+            function doSave() {
+                orga.set(form.getValues());
+                orga.save({
+                    success: function(organization) {
+                        if (organization.get('id') != selectedNode.get('id')) {
+                            if (selectedNode.isLeaf()) {                    
+                                selectedNode.set('expandable', true);
+                                selectedNode.set('leaf', false);
+                                selectedNode.appendChild(organization);
+                                selectedNode.expand();
+                            } else {
+                                selectedNode.appendChild(organization);
+                            }
+                        }
+                        win.close();
+                    }
+                });
+            }
         }
 
     },

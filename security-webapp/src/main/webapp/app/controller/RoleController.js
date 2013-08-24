@@ -188,7 +188,7 @@ Ext.define('Security.controller.RoleController', {
                     success: function(response, opts) {
                         var o = Ext.decode(response.responseText);
                         if (!o.unique) {
-                            codeField.markInvalid('角色名称已存在！');
+                            codeField.markInvalid('角色代码已存在！');
                             return;
                         }
                         doSave();

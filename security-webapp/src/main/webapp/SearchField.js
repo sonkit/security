@@ -36,7 +36,11 @@ Ext.define('Ext.ux.form.SearchField', {
 
     afterRender: function(){
         this.callParent();
-        this.triggerCell.item(0).setDisplayed(false);
+        if (this.value) {
+            this.hasSearch = true;
+        } else {
+            this.triggerCell.item(0).setDisplayed(false);
+        }
     },
 
     onTrigger1Click : function(){

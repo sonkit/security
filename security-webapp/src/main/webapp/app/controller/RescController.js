@@ -113,7 +113,7 @@ Ext.define('Security.controller.RescController', {
                     success: function(response, opts) {
                         var o = Ext.decode(response.responseText);
                         if (!o.unique) {
-                            codeField.markInvalid('系统资源名称已存在！');
+                            codeField.markInvalid('系统资源代码已存在！');
                             return;
                         }
                         doSave();
