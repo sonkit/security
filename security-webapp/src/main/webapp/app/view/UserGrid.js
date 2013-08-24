@@ -144,7 +144,7 @@ Ext.define('Security.view.UserGrid', {
 
     processUserGrid: function(config) {
         if (config.removeDockedItems) {
-            config.dockedItems = [];
+            config.dockedItems = null;
             config.columns.pop();
         }
 
