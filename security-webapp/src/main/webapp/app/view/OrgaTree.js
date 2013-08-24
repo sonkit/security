@@ -17,9 +17,11 @@ Ext.define('Security.view.OrgaTree', {
     extend: 'Ext.tree.Panel',
     alias: 'widget.orgatree',
 
+    autoScroll: true,
     bodyPadding: 5,
     title: '组织机构管理',
     store: 'Orga',
+    rootVisible: false,
     useArrows: true,
 
     initComponent: function() {
@@ -51,10 +53,20 @@ Ext.define('Security.view.OrgaTree', {
                     tooltip: '全部收缩',
                     type: 'minimize'
                 }
-            ]
+            ],
+            listeners: {
+                afterrender: {
+                    fn: me.onTreepanelAfterRender,
+                    scope: me
+                }
+            }
         });
 
         me.callParent(arguments);
+    },
+
+    onTreepanelAfterRender: function(component, eOpts) {
+        this.expandAll();
     }
 
 });

@@ -134,12 +134,8 @@ Ext.define('Security.view.UserWin', {
     processOrgaid: function(config) {
         config.xtype = 'treepicker';
         config.displayField = 'text';
-        config.forceSelection = true;
-        config.autoScroll = true
 
-        config.store = Ext.create('Security.store.Orga', {
-            autoLoad: true
-        });
+        config.store = Ext.create('Security.store.Orga');
         return config;
     }
 

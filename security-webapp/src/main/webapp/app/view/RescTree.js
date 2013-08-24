@@ -17,9 +17,11 @@ Ext.define('Security.view.RescTree', {
     extend: 'Ext.tree.Panel',
     alias: 'widget.resctree',
 
+    autoScroll: true,
     bodyPadding: 5,
     title: '系统资源管理',
     store: 'Resc',
+    rootVisible: false,
     useArrows: true,
 
     initComponent: function() {
@@ -50,7 +52,13 @@ Ext.define('Security.view.RescTree', {
                     tooltip: '全部收缩',
                     type: 'minimize'
                 }
-            ]
+            ],
+            listeners: {
+                afterrender: {
+                    fn: me.onTreepanelAfterRender,
+                    scope: me
+                }
+            }
         });
 
         me.processRescTree(me);
@@ -69,6 +77,10 @@ Ext.define('Security.view.RescTree', {
                 url: 'rescs/findByParentId'
             }
         });
+    },
+
+    onTreepanelAfterRender: function(component, eOpts) {
+        this.expandAll();
     }
 
 });

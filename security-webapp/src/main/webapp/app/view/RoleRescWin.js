@@ -21,12 +21,11 @@ Ext.define('Security.view.RoleRescWin', {
         'Security.view.RescTree'
     ],
 
-    height: 465,
-    width: 337,
+    height: 408,
+    width: 305,
     layout: {
         type: 'fit'
     },
-    bodyPadding: 1,
     constrainHeader: true,
     title: '角色授权',
     modal: true,
@@ -39,8 +38,7 @@ Ext.define('Security.view.RoleRescWin', {
                 {
                     xtype: 'resctree',
                     checkedTree: true,
-                    autoScroll: true,
-                    title: '系统资源'
+                    preventHeader: true
                 }
             ],
             dockedItems: [

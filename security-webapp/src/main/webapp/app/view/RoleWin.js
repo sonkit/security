@@ -34,9 +34,6 @@ Ext.define('Security.view.RoleWin', {
             items: [
                 {
                     xtype: 'form',
-                    defaults: {
-                        allowBlank: false
-                    },
                     bodyPadding: 10,
                     fieldDefaults: {
                         labelWidth: 60
@@ -50,13 +47,15 @@ Ext.define('Security.view.RoleWin', {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '名称',
-                            name: 'name'
+                            name: 'name',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '代码',
-                            name: 'code'
+                            name: 'code',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textareafield',

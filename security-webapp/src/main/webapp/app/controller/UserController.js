@@ -65,7 +65,7 @@ Ext.define('Security.controller.UserController', {
 
         if (!userrolepanel) {
             this.getController('UserRoleController');
-            userrolepanel = tabs.add(Ext.widget('userrolepanel'))
+            userrolepanel = tabs.add(Ext.widget('userrolepanel'));
         }
         tabs.setActiveTab(userrolepanel);
 
@@ -179,8 +179,7 @@ Ext.define('Security.controller.UserController', {
     },
 
     modifyUserPassword: function(e) {
-        var userStore = this.getUserStore(),
-            win = Ext.widget('userpwdwin'),
+        var win = Ext.widget('userpwdwin'),
             form = win.child('form').getForm(),
             user = this.getUserGrid().getSelectionModel().getLastSelected();
 

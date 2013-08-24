@@ -17,7 +17,8 @@ Ext.define('Security.view.RescWin', {
     extend: 'Ext.window.Window',
     alias: 'widget.rescwin',
 
-    width: 363,
+    height: 220,
+    width: 330,
     layout: {
         type: 'fit'
     },

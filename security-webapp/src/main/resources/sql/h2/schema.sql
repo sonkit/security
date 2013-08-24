@@ -101,6 +101,18 @@
     );
 
     alter table sec_orga 
+        add constraint UK_3n0dtko745hr41e09s5l2jpma unique (code);
+
+    alter table sec_resc 
+        add constraint UK_eg1ae38u1eaicg869io80hsh2 unique (code);
+
+    alter table sec_role 
+        add constraint UK_ln5t4vpgitajh436mnmf60oxm unique (code);
+
+    alter table sec_user 
+        add constraint UK_4l0crielkrtfuq50a25b41h2c unique (loginName);
+
+    alter table sec_orga 
         add constraint FK_1r6dqvf0vv2uwk5wvqfpnwddg 
         foreign key (parent_id) 
         references sec_orga;
