@@ -2,6 +2,7 @@ package com.wonders.security.entity;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -9,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -22,8 +24,11 @@ public class Resource extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1824225555278070623L;
 
+	@NotNull
 	private String text;
 
+	@NotNull
+	@Column(unique = true)
 	private String code;
 
 	private String description;

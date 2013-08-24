@@ -1,9 +1,7 @@
 package com.wonders.security.controller;
 
 import java.security.MessageDigest;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 

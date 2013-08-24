@@ -52,9 +52,9 @@ public abstract class AbstractCrudController<T, ID extends Serializable> {
 		repository.delete(repository.findOne(id));
 	}
 	
-	@RequestMapping(value = "isPropertyUnqiue", method = RequestMethod.GET)
+	@RequestMapping(value = "isPropertyUnique", method = RequestMethod.GET)
 	protected @ResponseBody
-	Map<String, Boolean> isPropertyUnqiue(String propertyName, String value) {
+	Map<String, Boolean> isPropertyUnique(String propertyName, String value) {
 		boolean unique = getRepository().isPropertyUnique(propertyName, value);
 		if (unique) {
 			return Collections.singletonMap("unique", Boolean.TRUE);

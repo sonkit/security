@@ -3,6 +3,7 @@ package com.wonders.security.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,6 +27,7 @@ public class Role extends AbstractPersistable<Long> {
 	private String name;
 
 	@NotNull
+	@Column(unique = true)
 	private String code;
 
 	private String description;

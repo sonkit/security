@@ -41,7 +41,7 @@ class MyRepositoryImpl<T, ID extends Serializable>
 		def root = query.from(domainClass)
 		query.with {
 			select(builder.count(root))
-			where(builder.equals(root.get(propertyName), value))
+			where(builder.equal(root.get(propertyName), value))
 		}
 		
 		entityManager.createQuery(query).singleResult == 0

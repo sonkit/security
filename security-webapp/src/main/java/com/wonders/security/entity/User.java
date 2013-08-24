@@ -3,6 +3,7 @@ package com.wonders.security.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -27,6 +28,7 @@ public class User extends AbstractPersistable<Long> {
 	private String username;
 	
 	@NotNull
+	@Column(unique = true)
 	private String loginName;
 	
 	@NotNull

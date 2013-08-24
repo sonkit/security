@@ -4,11 +4,13 @@ import static javax.persistence.FetchType.LAZY;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -25,12 +27,16 @@ public class Organization extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 3689173688484489873L;
 
+	@NotNull
 	private String text;
 	
+	@NotNull
+	@Column(unique = true)
 	private String code;
 	
 	private String districtCode;
 	
+	@NotNull
 	private String orgaType;
 	
 	private String address;
