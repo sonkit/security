@@ -75,8 +75,6 @@ Ext.define('Security.controller.RoleController', {
                 tree = win.child('resctree'),
                 roleId = sm.getLastSelected().get('id');
 
-            //tree.expandAll();
-
             Ext.Ajax.request({
                 url: 'rescs/findByRoleId',
                 method: 'GET',

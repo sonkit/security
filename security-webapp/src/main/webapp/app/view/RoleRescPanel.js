@@ -46,23 +46,12 @@ Ext.define('Security.view.RoleRescPanel', {
                     xtype: 'resctree',
                     checkedTree: true,
                     title: '系统资源',
-                    flex: 1,
-                    listeners: {
-                        afterrender: {
-                            fn: me.onTreepanelAfterRender,
-                            scope: me
-                        }
-                    }
+                    flex: 1
                 }
             ]
         });
 
         me.callParent(arguments);
-    },
-
-    onTreepanelAfterRender: function(component, eOpts) {
-        component.getRootNode().set('checked', false);
-        component.expandAll();
     }
 
 });
