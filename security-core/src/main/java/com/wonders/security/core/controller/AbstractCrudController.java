@@ -2,6 +2,7 @@ package com.wonders.security.core.controller;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -49,6 +50,16 @@ public abstract class AbstractCrudController<T, ID extends Serializable> {
 	void delete(@PathVariable ID id) {
 		MyRepository<T, ID> repository = getRepository();
 		repository.delete(repository.findOne(id));
+	}
+	
+	@RequestMapping(value = "isPropertyUnqiue", method = RequestMethod.GET)
+	protected @ResponseBody
+	Map<String, Boolean> isPropertyUnqiue(String propertyName, String value) {
+		boolean unique = getRepository().isPropertyUnique(propertyName, value);
+		if (unique) {
+			return Collections.singletonMap("unique", Boolean.TRUE);
+		}
+		return Collections.singletonMap("unique", Boolean.FALSE);
 	}
 	
 	private Map<?, ?> getFilters(Map<String, String> params) {

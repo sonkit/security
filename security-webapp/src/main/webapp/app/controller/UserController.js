@@ -114,12 +114,15 @@ Ext.define('Security.controller.UserController', {
 
             if (!loginNameField.readOnly) {
                 Ext.Ajax.request({
-                    url: 'users/isLoginNameUnique',
+                    url: 'users/isPropertyUnique',
                     method: 'GET',
-                    params: {loginName: loginNameField.getValue()},
+                    params: {
+                        propertyName: 'loginName',
+                        value: loginNameField.getValue()
+                    },
                     success: function(response, opts) {
                         var o = Ext.decode(response.responseText);
-                        if (!o.success) {
+                        if (!o.unique) {
                             loginNameField.markInvalid('用户登陆录名已存在！');
                             return;
                         }

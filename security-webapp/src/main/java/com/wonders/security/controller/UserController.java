@@ -41,16 +41,6 @@ public class UserController extends AbstractCrudController<User, Long> {
 		return super.add(user);
 	}
 	
-	@RequestMapping(value = "isLoginNameUnique", method = RequestMethod.GET)
-	@ResponseBody
-	Map<String, Boolean> isLoginNameUnique(String loginName) {
-		long count = userRepository.isLoginNameUnique(loginName);
-		if (count == 0) { // unique
-			return Collections.singletonMap("success", Boolean.TRUE);
-		}
-		return Collections.singletonMap("success", Boolean.FALSE);
-	}
-	
 	@RequestMapping(value = "modifyPassword", method = RequestMethod.POST)
 	@ResponseBody
 	void modifyPassword(long userId, String password) {

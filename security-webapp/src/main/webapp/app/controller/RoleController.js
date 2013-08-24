@@ -176,6 +176,32 @@ Ext.define('Security.controller.RoleController', {
             form = roleWin.child('form');
 
         if (form.isValid()) {
+
+            var codeField = form.getForm().findField('code');
+
+            if (!codeField.readOnly) {
+                Ext.Ajax.request({
+                    url: 'roles/isPropertyUnique',
+                    method: 'GET',
+                    params: {
+                        propertyName: 'code',
+                        value: codeField.getValue()
+                    },
+                    success: function(response, opts) {
+                        var o = Ext.decode(response.responseText);
+                        if (!o.unique) {
+                            codeField.markInvalid('角色名称已存在！');
+                            return;
+                        }
+                        doSave();
+                    }
+                });
+            } else {
+                doSave();   
+            }
+        }
+
+        function doSave() {
             Ext.create('Security.model.Role', form.getValues()).save({
                 success: function() {
                     roleGrid.getSelectionModel().deselectAll();
@@ -184,8 +210,6 @@ Ext.define('Security.controller.RoleController', {
                 }
             });
         }
-
-
     },
 
     onRescTreeCheckChange: function(node, checked, eOpts) {
@@ -205,6 +229,7 @@ Ext.define('Security.controller.RoleController', {
                 form = roleWin.child('form');
 
             form.loadRecord(record);
+            form.getForm().findField('code').readOnly = true;
             roleWin.show(button);
         }
 

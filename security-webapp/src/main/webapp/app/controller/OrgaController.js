@@ -76,6 +76,7 @@ Ext.define('Security.controller.OrgaController', {
 
                     record.set('parent', {id: record.get('parentId')});
 
+                    form.getForm().findField('code').readOnly = true;
                     form.loadRecord(record);
                     orgaWin.show(button);
                 }

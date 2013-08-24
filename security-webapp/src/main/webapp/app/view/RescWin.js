@@ -62,10 +62,6 @@ Ext.define('Security.view.RescWin', {
                             name: 'description'
                         }
                     ]
-                },
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Label'
                 }
             ],
             dockedItems: [

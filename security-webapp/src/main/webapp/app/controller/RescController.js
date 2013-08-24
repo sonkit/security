@@ -70,6 +70,7 @@ Ext.define('Security.controller.RescController', {
 
                     record.set('parent', {id: record.get('parentId')});
 
+                    form.getForm().findField('code').readOnly = true;
                     form.loadRecord(record);
                     rescWin.show(button);
                 }
@@ -98,6 +99,32 @@ Ext.define('Security.controller.RescController', {
             selectedNode = this.getRescTree().getSelectionModel().getLastSelected();
 
         if (form.isValid()) {
+
+            var codeField = form.getForm().findField('code');
+
+            if (!codeField.readOnly) {
+                Ext.Ajax.request({
+                    url: 'rescs/isPropertyUnique',
+                    method: 'GET',
+                    params: {
+                        propertyName: 'code',
+                        value: codeField.getValue()
+                    },
+                    success: function(response, opts) {
+                        var o = Ext.decode(response.responseText);
+                        if (!o.unique) {
+                            codeField.markInvalid('系统资源名称已存在！');
+                            return;
+                        }
+                        doSave();
+                    }
+                });
+            } else {
+                doSave();   
+            }
+        }
+
+        function doSave() {
             resc.set(form.getValues());
             resc.save({
                 success: function(resource) {

@@ -19,7 +19,7 @@ class MyRepositoryImpl<T, ID extends Serializable>
 	final Class<T> domainClass
 	final EntityManager entityManager
 		
-	public MyRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
+	MyRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
 		super(domainClass, entityManager)
 		
 		this.domainClass = domainClass
@@ -30,6 +30,21 @@ class MyRepositoryImpl<T, ID extends Serializable>
 	Page<T> findAll(Map params, Pageable pageable) {
 		def query = getQuery(params, pageable?.sort)
 		!pageable ? new PageImpl(query.resultList) : readPage(query, pageable, params)
+	}
+	
+	@Override
+	boolean isPropertyUnique(propertyName, value) {
+		
+		def builder = entityManager.criteriaBuilder
+		def query = builder.createQuery(domainClass)
+		
+		def root = query.from(domainClass)
+		query.with {
+			select(builder.count(root))
+			where(builder.equals(root.get(propertyName), value))
+		}
+		
+		entityManager.createQuery(query).singleResult == 0
 	}
 	
 	private TypedQuery getQuery(Map params, Sort sort) {

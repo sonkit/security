@@ -11,4 +11,6 @@ interface MyRepository<T, ID extends Serializable> extends
 
 	Page<T> findAll(Map params, Pageable pageable)
 	
+	boolean isPropertyUnique(propertyName, value)
+	
 }
