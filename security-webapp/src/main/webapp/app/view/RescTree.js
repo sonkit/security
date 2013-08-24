@@ -32,7 +32,7 @@ Ext.define('Security.view.RescTree', {
                 {
                     xtype: 'tool',
                     handler: function(event, toolEl, owner, tool) {
-                        owner.up('treepanel').getRootNode().expand();
+                        owner.up('treepanel').getRootNode().expandChildren();
                     },
                     type: 'refresh'
                 },
