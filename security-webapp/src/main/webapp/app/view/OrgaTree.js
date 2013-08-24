@@ -32,7 +32,7 @@ Ext.define('Security.view.OrgaTree', {
                 {
                     xtype: 'tool',
                     handler: function(event, toolEl, owner, tool) {
-                        owner.up('treepanel').getStore().load();
+                        owner.up('treepanel').getRootNode().expand();
                     },
                     tooltip: '刷新',
                     type: 'refresh'

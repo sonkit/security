@@ -210,12 +210,6 @@ Ext.define('Security.controller.RoleController', {
         }
     },
 
-    onRescTreeCheckChange: function(node, checked, eOpts) {
-        node.cascadeBy(function (child) {  
-            child.set("checked", checked);
-        });
-    },
-
     editRole: function(button, e, eOpts) {
         var roleWin = Ext.widget('rolewin'),
             roleGrid = this.getRoleGrid(),
@@ -252,9 +246,6 @@ Ext.define('Security.controller.RoleController', {
             },
             "rolewin button[text='保存']": {
                 click: this.saveRole
-            },
-            "rolerescwin > resctree": {
-                checkchange: this.onRescTreeCheckChange
             },
             "rolerescpanel > rolegrid button[text='编辑']": {
                 click: this.editRole

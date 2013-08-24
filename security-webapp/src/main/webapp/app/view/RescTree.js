@@ -32,7 +32,7 @@ Ext.define('Security.view.RescTree', {
                 {
                     xtype: 'tool',
                     handler: function(event, toolEl, owner, tool) {
-                        owner.up('treepanel').getStore().load();
+                        owner.up('treepanel').getRootNode().expand();
                     },
                     type: 'refresh'
                 },
@@ -57,6 +57,10 @@ Ext.define('Security.view.RescTree', {
                 afterrender: {
                     fn: me.onTreepanelAfterRender,
                     scope: me
+                },
+                checkchange: {
+                    fn: me.onTreepanelCheckChange,
+                    scope: me
                 }
             }
         });
@@ -66,21 +70,27 @@ Ext.define('Security.view.RescTree', {
     },
 
     processRescTree: function(config) {
-        if (!config.checkedTree) {
-            config.store = Ext.create('Security.store.Resc');
+        if (config.checkedTree) {
+            config.store = Ext.create('Security.store.Resc', {
+                proxy: {
+                    type: 'ajax',
+                    extraParams: {checkedTree: true},
+                    url: 'rescs/findByParentId'
+                }
+            });
             return;
         }
-        config.store = Ext.create('Security.store.Resc', {
-            proxy: {
-                type: 'ajax',
-                extraParams: {checkedTree: true},
-                url: 'rescs/findByParentId'
-            }
-        });
+        config.store = Ext.create('Security.store.Resc');
     },
 
     onTreepanelAfterRender: function(component, eOpts) {
         this.expandAll();
+    },
+
+    onTreepanelCheckChange: function(node, checked, eOpts) {
+        node.cascadeBy(function (child) {  
+            child.set('checked', checked);
+        });
     }
 
 });
