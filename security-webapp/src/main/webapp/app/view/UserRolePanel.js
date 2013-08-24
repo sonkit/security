@@ -27,7 +27,7 @@ Ext.define('Security.view.UserRolePanel', {
         type: 'vbox'
     },
     closable: true,
-    title: '用户－角色',
+    title: '用户授权',
 
     initComponent: function() {
         var me = this;
@@ -40,6 +40,7 @@ Ext.define('Security.view.UserRolePanel', {
                 {
                     xtype: 'usergrid',
                     removeDockedItems: true,
+                    title: '用户列表',
                     flex: 1
                 },
                 {
@@ -50,6 +51,7 @@ Ext.define('Security.view.UserRolePanel', {
                     xtype: 'rolegrid',
                     removeDockedItems: true,
                     newStore: true,
+                    title: '角色列表',
                     flex: 1
                 }
             ]

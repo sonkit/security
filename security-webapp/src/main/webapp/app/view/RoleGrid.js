@@ -17,7 +17,7 @@ Ext.define('Security.view.RoleGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.rolegrid',
 
-    title: '角色列表',
+    title: '角色管理',
     columnLines: true,
     store: 'Role',
 
