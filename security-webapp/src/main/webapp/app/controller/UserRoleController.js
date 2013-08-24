@@ -21,15 +21,15 @@ Ext.define('Security.controller.UserRoleController', {
         'Role'
     ],
     views: [
-        'UserRolePanel',
-        'RoleListWin'
+        'RoleListWin',
+        'UserRoleRescPanel'
     ],
 
     userGridSelectionChange: function(model, selected, eOpts) {
         if (selected.length) {
 
             var userId = selected[0].get('id'),
-                roleGrid = Ext.ComponentQuery.query('userrolepanel').pop().child('rolegrid'),
+                roleGrid = Ext.ComponentQuery.query('userrolerescpanel').pop().child('container > rolegrid'),
                 roleStore = roleGrid.getStore();
 
             roleStore.getProxy().url = 'roles/findByUserId';
@@ -77,7 +77,7 @@ Ext.define('Security.controller.UserRoleController', {
     },
 
     addRolesToUser: function(button, e, eOpts) {
-        var userrolepanel = Ext.ComponentQuery.query('userrolepanel').pop(),
+        var userrolepanel = Ext.ComponentQuery.query('userrolerescpanel').pop(),
             userGrid = userrolepanel.child('usergrid'),
             roleGrid = userrolepanel.child('rolegrid'),
             roleListWin = Ext.ComponentQuery.query('rolelistwin').pop(),
@@ -113,13 +113,13 @@ Ext.define('Security.controller.UserRoleController', {
 
     init: function(application) {
         this.control({
-            "userrolepanel > usergrid": {
+            "userrolerescpanel usergrid": {
                 selectionchange: this.userGridSelectionChange
             },
-            "userrolepanel > rolegrid button[text='删除']": {
+            "userrolerescpanel rolegrid button[text='删除']": {
                 click: this.removeRolesFromUser
             },
-            "userrolepanel > rolegrid button[text='添加']": {
+            "userrolerescpanel rolegrid button[text='添加']": {
                 click: this.openRoleListWin
             },
             "rolelistwin button[text='确定']": {

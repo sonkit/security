@@ -28,43 +28,42 @@ Ext.define('Security.view.UserGrid', {
             columns: [
                 {
                     xtype: 'gridcolumn',
-                    width: 119,
+                    width: 110,
                     dataIndex: 'username',
                     text: '用户名'
                 },
                 {
                     xtype: 'gridcolumn',
-                    width: 118,
+                    width: 110,
                     dataIndex: 'loginName',
                     text: '登录名'
                 },
                 {
                     xtype: 'gridcolumn',
-                    width: 137,
                     dataIndex: 'sex',
                     text: '性别'
                 },
                 {
                     xtype: 'gridcolumn',
-                    width: 127,
+                    width: 110,
                     dataIndex: 'userCard',
                     text: '用户证号'
                 },
                 {
                     xtype: 'gridcolumn',
-                    width: 130,
+                    width: 110,
                     dataIndex: 'phone',
                     text: '电话'
                 },
                 {
                     xtype: 'gridcolumn',
-                    width: 112,
+                    width: 110,
                     dataIndex: 'fax',
                     text: '传真'
                 },
                 {
                     xtype: 'gridcolumn',
-                    width: 200,
+                    width: 100,
                     dataIndex: 'orgaText',
                     text: '所属组织',
                     flex: 1

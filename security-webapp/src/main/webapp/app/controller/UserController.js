@@ -58,16 +58,17 @@ Ext.define('Security.controller.UserController', {
         }
     },
 
-    userRoleMgr: function(button, e, eOpts) {
-
+    userRoleRescMgr: function(button, e, eOpts) {
         var tabs = Ext.ComponentQuery.query('viewport > tabpanel').pop(),
-            userrolepanel = tabs.child('userrolepanel');
+            panel = tabs.child('userrolerescpanel');
 
-        if (!userrolepanel) {
+        if (!panel) {
             this.getController('UserRoleController');
-            userrolepanel = tabs.add(Ext.widget('userrolepanel'));
+            panel = tabs.add(Ext.widget('userrolerescpanel', {
+                closable: true
+            }));
         }
-        tabs.setActiveTab(userrolepanel);
+        tabs.setActiveTab(panel);
 
     },
 
@@ -196,7 +197,7 @@ Ext.define('Security.controller.UserController', {
                 click: this.onActioncolumnClick
             },
             "usergrid button[text='用户授权']": {
-                click: this.userRoleMgr
+                click: this.userRoleRescMgr
             },
             "userpwdwin button[text='保存']": {
                 click: this.saveUserNewPwd
