@@ -44,9 +44,9 @@ Ext.define('Security.view.UserRoleRescPanel', {
                     items: [
                         {
                             xtype: 'usergrid',
-                            flex: 1,
+                            removeDockedItems: true,
                             title: '用户列表',
-                            removeDockedItems: true
+                            flex: 1
                         },
                         {
                             xtype: 'splitter',
@@ -54,10 +54,10 @@ Ext.define('Security.view.UserRoleRescPanel', {
                         },
                         {
                             xtype: 'rolegrid',
-                            flex: 1,
-                            title: '角色列表',
                             removeDockedItems: true,
-                            newStore: true
+                            newStore: true,
+                            title: '角色列表',
+                            flex: 1
                         }
                     ]
                 },
@@ -67,9 +67,9 @@ Ext.define('Security.view.UserRoleRescPanel', {
                 },
                 {
                     xtype: 'resctree',
-                    flex: 1,
+                    checkedTree: true,
                     title: '系统资源',
-                    checkedTree: true
+                    flex: 1
                 }
             ]
         });

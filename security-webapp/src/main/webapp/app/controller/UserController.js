@@ -63,7 +63,7 @@ Ext.define('Security.controller.UserController', {
             panel = tabs.child('userrolerescpanel');
 
         if (!panel) {
-            this.getController('UserRoleController');
+            this.getController('UserRoleRescController');
             panel = tabs.add(Ext.widget('userrolerescpanel', {
                 closable: true
             }));
