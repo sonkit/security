@@ -23,14 +23,14 @@ public class WebAppInitializer extends AbstractDispatcherServletInitializer {
 	@Override
 	protected WebApplicationContext createRootApplicationContext() {
 		XmlWebApplicationContext rootAppCtx = new XmlWebApplicationContext();
-		rootAppCtx.setConfigLocation("classpath:applicationContext.xml");
+		rootAppCtx.setConfigLocation("classpath:/spring/applicationContext.xml");
 		return rootAppCtx;
 	}
 
 	@Override
 	protected WebApplicationContext createServletApplicationContext() {
 		XmlWebApplicationContext servletAppCtx = new XmlWebApplicationContext();
-		servletAppCtx.setConfigLocation("classpath:springmvc-servlet.xml");
+		servletAppCtx.setConfigLocation("classpath:/spring/springmvc-servlet.xml");
 		return servletAppCtx;
 	}
 
