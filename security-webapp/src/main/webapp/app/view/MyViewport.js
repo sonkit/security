@@ -46,6 +46,16 @@ Ext.define('Security.view.MyViewport', {
                     items: [
                         {
                             xtype: 'button',
+                            handler: function(button, event) {
+                                Ext.DomHelper.append(Ext.getBody(), {
+                                    tag: 'form',
+                                    id: 'logoutForm',
+                                    method: 'post',
+                                    action: 'logout'
+                                });
+
+                                Ext.get('logoutForm').dom.submit();
+                            },
                             text: '系统注消'
                         }
                     ]

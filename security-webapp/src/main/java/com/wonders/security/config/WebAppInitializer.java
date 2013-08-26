@@ -3,11 +3,13 @@ package com.wonders.security.config;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
-public class MyWebAppInitializer extends AbstractDispatcherServletInitializer {
+@Order(1)
+public class WebAppInitializer extends AbstractDispatcherServletInitializer {
 	
 	@Override
 	public void onStartup(ServletContext servletContext)
