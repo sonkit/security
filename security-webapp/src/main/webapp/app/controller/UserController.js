@@ -101,7 +101,9 @@ Ext.define('Security.controller.UserController', {
     },
 
     addUser: function(button, e, eOpts) {
-        Ext.widget('userwin').show(button);
+        Ext.widget('userwin', {
+            animationTarget: button
+        }).show();
     },
 
     saveUser: function(button, e, eOpts) {
