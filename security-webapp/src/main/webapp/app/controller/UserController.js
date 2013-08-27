@@ -102,7 +102,7 @@ Ext.define('Security.controller.UserController', {
 
     addUser: function(button, e, eOpts) {
         Ext.widget('userwin', {
-            animationTarget: button
+            animateTarget: button
         }).show();
     },
 
