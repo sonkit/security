@@ -43,6 +43,12 @@ public class RescController extends AbstractCrudController<Resource, Long> {
 
 		return rescs;
 	}
+	
+	@RequestMapping(value = "findByUserId", method = RequestMethod.GET)
+	@ResponseBody
+	List<Resource> findByUserId(long userId) {
+		return rescRepository.findByUserId(userId);
+	}
 
 	@RequestMapping(value = "findByRoleId", method = RequestMethod.GET)
 	@ResponseBody

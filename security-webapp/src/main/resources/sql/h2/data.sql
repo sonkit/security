@@ -38,12 +38,4 @@ INSERT INTO `sec_role_resc` (`role_id`,`resc_id`) VALUES (5,5);
 INSERT INTO `sec_role_resc` (`role_id`,`resc_id`) VALUES (5,6);
 
 INSERT INTO `sec_user` (`id`,`fax`,`loginName`,`password`,`phone`,`sex`,`userCard`,`username`,`orga_id`) VALUES (1,'333','wangqiang','e10adc3949ba59abbe56e057f20f883e','222','男','111','王强',3);
-INSERT INTO `sec_user` (`id`,`fax`,`loginName`,`password`,`phone`,`sex`,`userCard`,`username`,`orga_id`) VALUES (3,'5555','yaokai','c33367701511b4f6020ec61ded352059','33333','男','2222','姚楷',8);
-
-INSERT INTO `sec_user_role` (`user_id`,`role_id`) VALUES (1,1);
-INSERT INTO `sec_user_role` (`user_id`,`role_id`) VALUES (3,1);
-INSERT INTO `sec_user_role` (`user_id`,`role_id`) VALUES (1,2);
-INSERT INTO `sec_user_role` (`user_id`,`role_id`) VALUES (1,3);
-INSERT INTO `sec_user_role` (`user_id`,`role_id`) VALUES (1,4);
-INSERT INTO `sec_user_role` (`user_id`,`role_id`) VALUES (1,5);
-INSERT INTO `sec_user_role` (`user_id`,`role_id`) VALUES (3,5);
+INSERT INTO `sec_user` (`id`,`fax`,`loginName`,`password`,`phone`,`sex`,`userCard`,`username`,`orga_id`) VALUES (3,'5555','yaokai','c33367701511b4f6020ec61ded352059','33333','男','2222','姚楷',9);

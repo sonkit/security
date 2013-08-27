@@ -25,61 +25,40 @@ Ext.define('Security.controller.UserRoleRescController', {
         'UserRoleRescPanel'
     ],
 
+    refs: [
+        {
+            ref: 'userGrid',
+            selector: 'userrolerescpanel container > usergrid'
+        },
+        {
+            ref: 'roleGrid',
+            selector: 'userrolerescpanel container > rolegrid'
+        },
+        {
+            ref: 'rescTree',
+            selector: 'userrolerescpanel resctree'
+        }
+    ],
+
     userGridSelectionChange: function(model, selected, eOpts) {
         if (selected.length) {
 
             var userId = selected[0].get('id'),
-                roleGrid = Ext.ComponentQuery.query('userrolerescpanel').pop().child('container > rolegrid'),
-                roleStore = roleGrid.getStore();
+                roleStore = this.getRoleGrid().getStore();
 
             roleStore.getProxy().url = 'roles/findByUserId';
             roleStore.getProxy().setExtraParam('userId', userId);
 
             roleStore.load();
 
-        }
-    },
-
-    removeRolesFromUser: function(button, e, eOpts) {
-        var panel = Ext.ComponentQuery.query('userrolerescpanel').pop(),
-            userGrid = panel.child('container > usergrid'),
-            roleGrid = panel.child('container > rolegrid'),
-            userSm = userGrid.getSelectionModel(),
-            roleSm = roleGrid.getSelectionModel();
-
-        if (roleSm.hasSelection()) {
-
-            var userId = userSm.getLastSelected().get('id'),
-                roles = roleSm.getSelection(),
-                roleIds = [];
-
-
-            Ext.each(roles, function(role) {
-                roleIds.push(role.get('id'));
-            });
-
-            Ext.Ajax.request({
-                url: 'users/removeRolesFromUser',
-                params: {
-                    'userId': userId,
-                    'roleIds': roleIds
-                },
-                success: function(response, opts) {
-                    roleGrid.getStore().reload();
-                }
-            });
+            this.findRescsByUserId(userId);
 
         }
-    },
-
-    openRoleListWin: function(button, e, eOpts) {
-        Ext.widget('rolelistwin').show(button);
     },
 
     addRolesToUser: function(button, e, eOpts) {
-        var panel = Ext.ComponentQuery.query('userrolerescpanel').pop(),
-            userGrid = panel.child('container > usergrid'),
-            roleGrid = panel.child('container > rolegrid'),
+        var userGrid = this.getUserGrid(),
+            roleGrid = this.getRoleGrid(),
             roleListWin = Ext.ComponentQuery.query('rolelistwin').pop(),
             roleGrid2 = roleListWin.child('gridpanel'),
             userSm = userGrid.getSelectionModel(),
@@ -99,16 +78,82 @@ Ext.define('Security.controller.UserRoleRescController', {
             Ext.Ajax.request({
                 url: 'users/addRolesToUser',
                 params: {
-                    'userId': userId,
-                    'roleIds': roleIds
+                    userId : userId,
+                    roleIds: roleIds
                 },
                 success: function(response, opts) {
                     roleListWin.close();
-                    roleGrid.getStore().reload();
-                }
+                    this.getRoleGrid().getStore().reload();
+
+                    this.findRescsByUserId(userId);
+                },
+                scope: this
             });
 
         }
+    },
+
+    removeRolesFromUser: function(button, e, eOpts) {
+        var userSm = this.getUserGrid().getSelectionModel(),
+            roleSm = this.getRoleGrid().getSelectionModel();
+
+        if (roleSm.hasSelection()) {
+
+            var userId = userSm.getLastSelected().get('id'),
+                roles = roleSm.getSelection(),
+                roleIds = [];
+
+
+            Ext.each(roles, function(role) {
+                roleIds.push(role.get('id'));
+            });
+
+            Ext.Ajax.request({
+                url: 'users/removeRolesFromUser',
+                params: {
+                    userId : userId,
+                    roleIds: roleIds
+                },
+                success: function(response, opts) {
+                    this.getRoleGrid().getStore().reload();
+                    this.findRescsByUserId(userId);
+                },
+                scope: this
+            });
+
+        }
+    },
+
+    openRoleListWin: function(button, e, eOpts) {
+        Ext.widget('rolelistwin').show(button);
+    },
+
+    findRescsByUserId: function(userId) {
+        Ext.Ajax.request({
+            url: 'rescs/findByUserId',
+            method: 'GET',
+            params: {
+                userId: userId
+            },
+            success: function(response, opts) {
+                var rescs = Ext.decode(response.responseText),
+                    rescIds = [],
+                    rootNode = this.getRescTree().getRootNode();
+
+                Ext.each(rescs, function(resc) {
+                    rescIds.push(resc.id);
+                });
+
+                rootNode.cascadeBy(function(node) {
+                    if (Ext.Array.contains(rescIds, node.get('id'))) {
+                        node.set('checked', true);
+                    } else {
+                        node.set('checked', false);
+                    }
+                });
+            },
+            scope: this
+        });
     },
 
     init: function(application) {
@@ -116,14 +161,14 @@ Ext.define('Security.controller.UserRoleRescController', {
             "userrolerescpanel usergrid": {
                 selectionchange: this.userGridSelectionChange
             },
+            "rolelistwin button[text='确定']": {
+                click: this.addRolesToUser
+            },
             "userrolerescpanel rolegrid button[text='删除']": {
                 click: this.removeRolesFromUser
             },
             "userrolerescpanel rolegrid button[text='添加']": {
                 click: this.openRoleListWin
-            },
-            "rolelistwin button[text='确定']": {
-                click: this.addRolesToUser
             }
         });
     }

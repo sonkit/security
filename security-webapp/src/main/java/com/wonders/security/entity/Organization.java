@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -29,32 +31,33 @@ public class Organization extends AbstractPersistable<Long> {
 
 	@NotNull
 	private String text;
-	
+
 	@NotNull
 	@Column(unique = true)
 	private String code;
-	
+
 	private String districtCode;
-	
+
 	@NotNull
-	private String orgaType;
-	
+	@Enumerated(EnumType.STRING)
+	private OrgaType orgaType;
+
 	private String address;
-	
+
 	private String description;
-	
+
 	@ManyToOne(fetch = LAZY)
 	private Organization parent;
-	
+
 	@OneToMany(mappedBy = "parent")
 	@OrderBy("text")
 	@JsonIgnore
 	private Set<Organization> children;
-	
+
 	public Organization() {
-		
+
 	}
-	
+
 	public Organization(Long id) {
 		this.setId(id);
 	}
@@ -83,11 +86,11 @@ public class Organization extends AbstractPersistable<Long> {
 		this.districtCode = districtCode;
 	}
 
-	public String getOrgaType() {
+	public OrgaType getOrgaType() {
 		return this.orgaType;
 	}
 
-	public void setOrgaType(String orgaType) {
+	public void setOrgaType(OrgaType orgaType) {
 		this.orgaType = orgaType;
 	}
 
@@ -113,7 +116,7 @@ public class Organization extends AbstractPersistable<Long> {
 		}
 		return null;
 	}
-	
+
 	public Organization getParent() {
 		return parent;
 	}
@@ -128,6 +131,10 @@ public class Organization extends AbstractPersistable<Long> {
 
 	public void setChildren(Set<Organization> children) {
 		this.children = children;
+	}
+
+	enum OrgaType {
+		省级机构, 市级机构, 县级机构, 部门
 	}
 
 }

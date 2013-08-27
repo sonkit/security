@@ -4,12 +4,10 @@ import javax.inject.Inject
 
 import org.springframework.security.core.userdetails.User as SecurityUser
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-import com.wonders.security.entity.Role
 import com.wonders.security.entity.User
 import com.wonders.security.repository.RoleRepository
 import com.wonders.security.repository.UserRepository
@@ -50,7 +48,11 @@ class UserServiceImpl implements UserService {
 
 		if (user) {
 
-			def roles = (List<Role>) roleRepository.findAll(roleIds as List)
+			def roles = roleRepository.findAll(roleIds as List)
+			
+			roles.each { role ->
+				user.rescs.addAll(role.rescs)
+			}
 
 			user.roles.addAll(roles)
 		}
@@ -65,7 +67,11 @@ class UserServiceImpl implements UserService {
 
 		if (user) {
 
-			def roles = (List<Role>) roleRepository.findAll(roleIds as List)
+			def roles = roleRepository.findAll(roleIds as List)
+			
+			roles.each { role ->
+				user.rescs.removeAll(role.rescs)
+			}
 
 			user.roles.removeAll(roles)
 		}

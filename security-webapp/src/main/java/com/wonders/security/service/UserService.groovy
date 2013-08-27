@@ -7,10 +7,10 @@ import com.wonders.security.entity.User
 interface UserService extends UserDetailsService {
 
 	void modifyPassword(long userId, String password)
+	
+	User addRolesToUser(long userId, long... roleIds)
 
 	User removeRolesFromUser(long userId, long... roleIds)
-
-	User addRolesToUser(long userId, long... roleIds)
 
 }
  
