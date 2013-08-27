@@ -18,7 +18,7 @@ Ext.define('Security.view.RoleListWin', {
     alias: 'widget.rolelistwin',
 
     height: 335,
-    width: 593,
+    width: 555,
     layout: {
         type: 'fit'
     },
@@ -30,33 +30,10 @@ Ext.define('Security.view.RoleListWin', {
         var me = this;
 
         Ext.applyIf(me, {
-            dockedItems: [
-                {
-                    xtype: 'toolbar',
-                    dock: 'bottom',
-                    items: [
-                        {
-                            xtype: 'tbfill'
-                        },
-                        {
-                            xtype: 'button',
-                            text: '确定'
-                        },
-                        {
-                            xtype: 'button',
-                            handler: function(button, event) {
-                                button.up('window').close();
-                            },
-                            text: '关闭'
-                        }
-                    ]
-                }
-            ],
             items: [
-                {
+                me.processMyGridPanel1({
                     xtype: 'gridpanel',
                     columnLines: true,
-                    store: 'Role',
                     columns: [
                         {
                             xtype: 'gridcolumn',
@@ -82,9 +59,39 @@ Ext.define('Security.view.RoleListWin', {
                         {
                             xtype: 'pagingtoolbar',
                             dock: 'bottom',
-                            width: 360,
-                            displayInfo: true,
-                            store: 'Role'
+                            displayInfo: true
+                        },
+                        {
+                            xtype: 'toolbar',
+                            dock: 'top',
+                            items: [
+                                {
+                                    xtype: 'triggerfield',
+                                    width: 254,
+                                    fieldLabel: '名称',
+                                    labelWidth: 55,
+                                    emptyText: '请输入一个角色名称！'
+                                }
+                            ]
+                        }
+                    ]
+                })
+            ],
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'bottom',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: '确定'
+                        },
+                        {
+                            xtype: 'button',
+                            handler: function(button, event) {
+                                button.up('window').close();
+                            },
+                            text: '关闭'
                         }
                     ]
                 }
@@ -92,6 +99,19 @@ Ext.define('Security.view.RoleListWin', {
         });
 
         me.callParent(arguments);
+    },
+
+    processMyGridPanel1: function(config) {
+        config.store = Ext.create('Security.store.Role');
+        config.dockedItems[0].store = config.store;
+
+        var searchfield = config.dockedItems[1].items[0];
+
+        searchfield.xtype = 'searchfield';
+        searchfield.paramName = 'search_name_like';
+        searchfield.store = config.store;
+
+        return config;
     }
 
 });

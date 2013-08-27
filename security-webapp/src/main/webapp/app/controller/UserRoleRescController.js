@@ -125,7 +125,8 @@ Ext.define('Security.controller.UserRoleRescController', {
     },
 
     openRoleListWin: function(button, e, eOpts) {
-        Ext.widget('rolelistwin').show(button);
+        var sm = this.getUserGrid().getSelectionModel();
+        if (sm.hasSelection()) Ext.widget('rolelistwin').show(button);
     },
 
     findRescsByUserId: function(userId) {
