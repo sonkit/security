@@ -51,7 +51,7 @@ Ext.define('Security.controller.UserRoleRescController', {
 
             roleStore.load();
 
-            this.findRescsByUserId(userId);
+            this.findRescIdsByUserId(userId);
 
         }
     },
@@ -85,7 +85,7 @@ Ext.define('Security.controller.UserRoleRescController', {
                     roleListWin.close();
                     this.getRoleGrid().getStore().reload();
 
-                    this.findRescsByUserId(userId);
+                    this.findRescIdsByUserId(userId);
                 },
                 scope: this
             });
@@ -116,7 +116,7 @@ Ext.define('Security.controller.UserRoleRescController', {
                 },
                 success: function(response, opts) {
                     this.getRoleGrid().getStore().reload();
-                    this.findRescsByUserId(userId);
+                    this.findRescIdsByUserId(userId);
                 },
                 scope: this
             });
@@ -125,11 +125,21 @@ Ext.define('Security.controller.UserRoleRescController', {
     },
 
     openRoleListWin: function(button, e, eOpts) {
-        var sm = this.getUserGrid().getSelectionModel();
-        if (sm.hasSelection()) Ext.widget('rolelistwin').show(button);
+        var sm = this.getUserGrid().getSelectionModel(),
+            win = this.win;
+
+        if (sm.hasSelection()) {
+            if (!win) {
+                win = Ext.widget('rolelistwin', {
+                    animateTarget: button
+                });
+                this.win = win;
+            }
+            win.show();
+        }
     },
 
-    findRescsByUserId: function(userId) {
+    findRescIdsByUserId: function(userId) {
         Ext.Ajax.request({
             url: 'rescs/findByUserId',
             method: 'GET',
@@ -137,13 +147,8 @@ Ext.define('Security.controller.UserRoleRescController', {
                 userId: userId
             },
             success: function(response, opts) {
-                var rescs = Ext.decode(response.responseText),
-                    rescIds = [],
+                var rescIds = Ext.decode(response.responseText),
                     rootNode = this.getRescTree().getRootNode();
-
-                Ext.each(rescs, function(resc) {
-                    rescIds.push(resc.id);
-                });
 
                 rootNode.cascadeBy(function(node) {
                     if (Ext.Array.contains(rescIds, node.get('id'))) {

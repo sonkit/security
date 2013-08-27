@@ -11,9 +11,6 @@ interface RescRepository extends MyRepository<Resource, Long> {
 	@Query('select distinct(r) from Resource r left join fetch r.children where r.parent.id = :parentId')
 	List<Resource> findByParentId(@Param('parentId') Long parentId)
 	
-	@Query('select u.rescs from User u where u.id = :userId')
-	List<Resource> findByUserId(@Param('userId') Long userId)
-	
 	@Query('select r.rescs from Role r where r.id = :roleId')
 	List<Resource> findByRoleId(@Param('roleId') Long roleId)
 

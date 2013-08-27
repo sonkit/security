@@ -22,6 +22,7 @@ Ext.define('Security.view.RoleListWin', {
     layout: {
         type: 'fit'
     },
+    closeAction: 'hide',
     constrainHeader: true,
     title: '角色列表',
     modal: true,
@@ -89,7 +90,7 @@ Ext.define('Security.view.RoleListWin', {
                         {
                             xtype: 'button',
                             handler: function(button, event) {
-                                button.up('window').close();
+                                button.up('window').hide();
                             },
                             text: '关闭'
                         }

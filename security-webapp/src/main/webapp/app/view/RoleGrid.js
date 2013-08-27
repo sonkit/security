@@ -99,14 +99,9 @@ Ext.define('Security.view.RoleGrid', {
     },
 
     processMyTriggerField2: function(config) {
-        var store = Ext.StoreMgr.lookup('Role'),
-            filter = store.filters.get('search_name_like'),
-            value = filter ? filter.value : '';
-
         config.xtype = 'searchfield';
         config.paramName = 'search_name_like';
-        config.store = store;
-        config.value = value;
+        config.store = Ext.StoreMgr.lookup('Role');
 
         return config;
     },

@@ -49,10 +49,6 @@ class UserServiceImpl implements UserService {
 		if (user) {
 
 			def roles = roleRepository.findAll(roleIds as List)
-			
-			roles.each { role ->
-				user.rescs.addAll(role.rescs)
-			}
 
 			user.roles.addAll(roles)
 		}
@@ -68,10 +64,6 @@ class UserServiceImpl implements UserService {
 		if (user) {
 
 			def roles = roleRepository.findAll(roleIds as List)
-			
-			roles.each { role ->
-				user.rescs.removeAll(role.rescs)
-			}
 
 			user.roles.removeAll(roles)
 		}

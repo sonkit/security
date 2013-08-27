@@ -14,10 +14,14 @@ import com.wonders.security.core.controller.AbstractCrudController;
 import com.wonders.security.core.repository.MyRepository;
 import com.wonders.security.entity.Resource;
 import com.wonders.security.repository.RescRepository;
+import com.wonders.security.service.RescService;
 
 @Controller
 @RequestMapping("rescs")
 public class RescController extends AbstractCrudController<Resource, Long> {
+	
+	@Inject
+	private RescService rescService;
 
 	@Inject
 	private RescRepository rescRepository;
@@ -46,8 +50,8 @@ public class RescController extends AbstractCrudController<Resource, Long> {
 	
 	@RequestMapping(value = "findByUserId", method = RequestMethod.GET)
 	@ResponseBody
-	List<Resource> findByUserId(long userId) {
-		return rescRepository.findByUserId(userId);
+	long[] findByUserId(long userId) {
+		return rescService.findRescIdsByUserId(userId);
 	}
 
 	@RequestMapping(value = "findByRoleId", method = RequestMethod.GET)

@@ -135,14 +135,9 @@ Ext.define('Security.view.UserGrid', {
     },
 
     processMyTriggerField1: function(config) {
-        var store = Ext.StoreMgr.lookup('User'),
-            filter = store.filters.get('search_username_like'),
-            value = filter ? filter.value : '';
-
         config.xtype = 'searchfield';
         config.paramName = 'search_username_like';
-        config.store = store;
-        config.value = value;
+        config.store = Ext.StoreMgr.lookup('User');
 
         return config;
     },
