@@ -30,3 +30,5 @@
 #msg-div .msg p {
     margin: 0;
 }
+.orga-icon-cls { background-image: url(images/groups.png) !important; }
+.resc-icon-cls { background-image: url(images/resc-cls.png) !important; }

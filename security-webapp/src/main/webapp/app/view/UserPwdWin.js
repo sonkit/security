@@ -21,6 +21,8 @@ Ext.define('Security.view.UserPwdWin', {
     layout: {
         type: 'fit'
     },
+    closeAction: 'hide',
+    constrainHeader: true,
     title: '修改密码',
 
     initComponent: function() {
@@ -46,7 +48,8 @@ Ext.define('Security.view.UserPwdWin', {
                             xtype: 'textfield',
                             anchor: '100%',
                             fieldLabel: '用户名',
-                            name: 'username'
+                            name: 'username',
+                            readOnly: true
                         },
                         {
                             xtype: 'textfield',
@@ -79,7 +82,7 @@ Ext.define('Security.view.UserPwdWin', {
                         {
                             xtype: 'button',
                             handler: function(button, event) {
-                                button.up('window').close();
+                                button.up('window').hide();
                             },
                             text: '关闭'
                         }

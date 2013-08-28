@@ -82,7 +82,7 @@ Ext.define('Security.view.UserGrid', {
                             tooltip: '删除用户'
                         },
                         {
-                            icon: 'images/edit.png',
+                            icon: 'images/key.png',
                             tooltip: '修改密码'
                         }
                     ]

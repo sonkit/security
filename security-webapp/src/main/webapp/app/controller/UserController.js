@@ -94,7 +94,7 @@ Ext.define('Security.controller.UserController', {
                 },
                 success: function(response, opts) {
                     Ext.example.msg('提示', '用户密码修改成功！');
-                    win.close();
+                    win.hide();
                 }
             });
         }
@@ -182,15 +182,20 @@ Ext.define('Security.controller.UserController', {
     },
 
     modifyUserPassword: function(e) {
-        var win = Ext.widget('userpwdwin'),
-            form = win.child('form').getForm(),
+        var win = this.win;
+        if (!win) {
+            win = Ext.widget('userpwdwin');
+            this.win = win;
+        }
+
+        var form = win.child('form').getForm(),
             user = this.getUserGrid().getSelectionModel().getLastSelected();
 
+        form.reset();
         form.findField('id').setValue(user.get('id'));
         form.findField('username').setValue(user.get('username'));
 
         win.show(e.target);
-
     },
 
     init: function(application) {

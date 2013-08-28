@@ -107,5 +107,9 @@ public class Resource extends AbstractPersistable<Long> {
 	public void setChecked(Boolean checked) {
 		this.checked = checked;
 	}
+	
+	public String getIconCls() {
+		return "resc-icon-cls";
+	}
 
 }

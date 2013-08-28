@@ -132,8 +132,12 @@ public class Organization extends AbstractPersistable<Long> {
 	public void setChildren(Set<Organization> children) {
 		this.children = children;
 	}
+	
+	public String getIconCls() {
+		return "orga-icon-cls";
+	}
 
-	enum OrgaType {
+	public enum OrgaType {
 		省级机构, 市级机构, 县级机构, 部门
 	}
 
