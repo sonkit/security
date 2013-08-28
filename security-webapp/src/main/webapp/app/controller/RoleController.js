@@ -36,6 +36,10 @@ Ext.define('Security.controller.RoleController', {
             selector: 'rolerescpanel > rolegrid'
         },
         {
+            ref: 'rescTree',
+            selector: 'rolerescpanel > resctree'
+        },
+        {
             ref: 'roleWin',
             selector: 'rolewin'
         },
@@ -45,97 +49,7 @@ Ext.define('Security.controller.RoleController', {
         }
     ],
 
-    deleteRole: function(button, e, eOpts) {
-        var selModel = this.getRoleGrid().getSelectionModel(),
-            roleStore = this.getRoleStore();
-
-        if (selModel.hasSelection()) {
-            Ext.Msg.confirm('确认', '您确定要删除吗?', function(buttonId) {
-                if (buttonId == 'yes') {
-                    var record = selModel.getLastSelected();
-                    Ext.create('Security.model.Role', {
-                        id: record.get('id')
-                    }).destroy({
-                        success: function() {
-                            roleStore.reload();
-                        }
-                    });
-                }
-            });
-        }
-    },
-
-    roleRescMgr: function(button, e, eOpts) {
-        var roleGrid = this.getRoleGrid(),
-            sm = roleGrid.getSelectionModel();
-
-        if (sm.hasSelection()) {
-
-            var win = Ext.widget('rolerescwin'),
-                tree = win.child('resctree'),
-                roleId = sm.getLastSelected().get('id');
-
-            Ext.Ajax.request({
-                url: 'rescs/findByRoleId',
-                method: 'GET',
-                params: {roleId: roleId},
-                success: function(response, opts) {
-                    var rescs = Ext.decode(response.responseText),
-                        rescIds = [];
-
-                    Ext.each(rescs, function(resc) {
-                        rescIds.push(resc.id);
-                    });
-
-                    win.show(button, function() {
-                        tree.getRootNode().cascadeBy(function(node) {
-                            if (Ext.Array.contains(rescIds, node.get('id'))) {
-                                node.set('checked', true);
-                            } else {
-                                node.set('checked', false);
-                            }
-                        });
-                    });
-                }
-            });
-        }
-    },
-
-    maintainRoleResc: function(button, e, eOpts) {
-        var sm = this.getRoleGrid().getSelectionModel(),
-            roleId = sm.getLastSelected().get('id'),
-            win = this.getRoleRescWin(),
-            tree = win.child('resctree'),
-            checkedNodes = tree.getChecked(),
-            rescIds = [];
-
-        Ext.each(checkedNodes, function(node) {
-            rescIds.push(node.get('id'));
-        });
-
-        Ext.Ajax.request({
-            url: 'roles/maintainRoleResc',
-            method: 'POST',
-            params: {
-                roleId: roleId,
-                rescIds: rescIds
-            },
-            success: function(response, opts) {
-                var tree = Ext.ComponentQuery.query('rolerescpanel > resctree').pop();
-                tree.expandAll();
-                tree.getRootNode().cascadeBy(function(node) {
-                    if (Ext.Array.contains(rescIds, node.get('id'))) {
-                        node.set('checked', true);
-                    } else {
-                        node.set('checked', false);
-                    }
-                });
-                win.close();
-            }
-        });
-    },
-
-    onGridpanelSelectionChange: function(model, selected, eOpts) {
+    onRoleGridSelectionChange: function(model, selected, eOpts) {
         if (selected.length) {
             var roleId = selected[0].get('id');
 
@@ -151,17 +65,98 @@ Ext.define('Security.controller.RoleController', {
                         rescIds.push(resc.id);
                     });
 
-                    var tree = Ext.ComponentQuery.query('rolerescpanel > resctree').pop();
-                    tree.getRootNode().cascadeBy(function(node) {
+                    var rescTree = this.getRescTree();
+                    rescTree.expandAll();
+
+                    rescTree.getRootNode().cascadeBy(function(node) {
                         if (Ext.Array.contains(rescIds, node.get('id'))) {
                             node.set('checked', true);
                         } else {
                             node.set('checked', false);
                         }
                     });
+                },
+                scope: this
+            });
+        }
+    },
+
+    roleRescMgr: function(button, e, eOpts) {
+        var win = this.win,
+            roleGridSm = this.getRoleGrid().getSelectionModel();
+
+        if (roleGridSm.hasSelection()) {
+
+            if (!win) {
+                win = Ext.widget('rolerescwin', {
+                    animateTarget: button
+                });
+                this.win = win;
+            }
+
+            Ext.Ajax.request({
+                url: 'rescs/findByRoleId',
+                method: 'GET',
+                params: {
+                    roleId: roleGridSm.getLastSelected().get('id')
+                },
+                success: function(response, opts) {
+                    var rescs = Ext.decode(response.responseText),
+                        rescIds = [];
+
+                    Ext.each(rescs, function(resc) {
+                        rescIds.push(resc.id);
+                    });
+
+                    win.show(button, function() {
+                        var tree = this.child('resctree');
+                        tree.expandAll();
+
+                        tree.getRootNode().cascadeBy(function(node) {
+                            if (Ext.Array.contains(rescIds, node.get('id'))) {
+                                node.set('checked', true);
+                            } else {
+                                node.set('checked', false);
+                            }
+                        });
+                    });
                 }
             });
         }
+    },
+
+    maintainRoleResc: function(button, e, eOpts) {
+        var roleGridSm = this.getRoleGrid().getSelectionModel(),
+            win = this.getRoleRescWin(),
+            tree = win.child('resctree'),
+            rescIds = [];
+
+        Ext.each(tree.getChecked(), function(node) {
+            rescIds.push(node.get('id'));
+        });
+
+        Ext.Ajax.request({
+            url: 'roles/maintainRoleResc',
+            method: 'POST',
+            params: {
+                roleId: roleGridSm.getLastSelected().get('id'),
+                rescIds: rescIds
+            },
+            success: function(response, opts) {
+                var rescTree = this.getRescTree();
+                rescTree.expandAll();
+
+                rescTree.getRootNode().cascadeBy(function(node) {
+                    if (Ext.Array.contains(rescIds, node.get('id'))) {
+                        node.set('checked', true);
+                    } else {
+                        node.set('checked', false);
+                    }
+                });
+                win.hide();
+            },
+            scope: this
+        });
     },
 
     addRole: function(button, e, eOpts) {
@@ -227,19 +222,36 @@ Ext.define('Security.controller.RoleController', {
 
     },
 
+    deleteRole: function(button, e, eOpts) {
+        var selModel = this.getRoleGrid().getSelectionModel(),
+            roleStore = this.getRoleStore();
+
+        if (selModel.hasSelection()) {
+            Ext.Msg.confirm('确认', '您确定要删除吗?', function(buttonId) {
+                if (buttonId == 'yes') {
+                    var record = selModel.getLastSelected();
+                    Ext.create('Security.model.Role', {
+                        id: record.get('id')
+                    }).destroy({
+                        success: function() {
+                            roleStore.reload();
+                        }
+                    });
+                }
+            });
+        }
+    },
+
     init: function(application) {
         this.control({
-            "rolerescpanel > rolegrid button[text='删除']": {
-                click: this.deleteRole
+            "rolerescpanel > rolegrid": {
+                selectionchange: this.onRoleGridSelectionChange
             },
             "rolerescpanel > rolegrid button[text='角色授权']": {
                 click: this.roleRescMgr
             },
             "rolerescwin button[text='确定']": {
                 click: this.maintainRoleResc
-            },
-            "rolerescpanel > rolegrid": {
-                selectionchange: this.onGridpanelSelectionChange
             },
             "rolerescpanel > rolegrid button[text='添加']": {
                 click: this.addRole
@@ -249,6 +261,9 @@ Ext.define('Security.controller.RoleController', {
             },
             "rolerescpanel > rolegrid button[text='编辑']": {
                 click: this.editRole
+            },
+            "rolerescpanel > rolegrid button[text='删除']": {
+                click: this.deleteRole
             }
         });
     }

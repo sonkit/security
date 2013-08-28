@@ -26,6 +26,7 @@ Ext.define('Security.view.RoleRescWin', {
     layout: {
         type: 'fit'
     },
+    closeAction: 'hide',
     constrainHeader: true,
     title: '角色授权',
     modal: true,
@@ -53,7 +54,7 @@ Ext.define('Security.view.RoleRescWin', {
                         {
                             xtype: 'button',
                             handler: function(button, event) {
-                                button.up('window').close();
+                                button.up('window').hide();
                             },
                             text: '关闭'
                         }

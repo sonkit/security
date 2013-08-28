@@ -18,7 +18,8 @@ class RescServiceImpl implements RescService {
 	@Override
 	long[] findRescIdsByUserId(long userId) {
 
-		def user = userRepository.findOne(userId), rescs = new HashSet()
+		def user = userRepository.findOne(userId),
+			rescs = [] as Set
 
 		if (user) {
 			user.roles.each { role ->

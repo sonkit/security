@@ -28,11 +28,12 @@ class RoleServiceImpl implements RoleService {
 
 		if (role) {
 			
-			def rescs = (List<Resource>) rescRepository.findAll(rescIds as List)
+			def rescs = rescRepository.findAll(rescIds as List)
 			
 			rescs.each { resc ->
 				
-				if (!role.rescs.contains(resc)) {
+				if (!(resc in role.rescs)) {
+					
 					role.rescs << resc
 				}
 				
@@ -43,7 +44,7 @@ class RoleServiceImpl implements RoleService {
 
 				def resc = iter.next()
 
-				if (!rescs.contains(resc)) {
+				if (!(resc in rescs)) {
 
 					iter.remove()
 				}
