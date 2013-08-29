@@ -88,7 +88,12 @@ Ext.define('Security.controller.OrgaController', {
                             id: record.get('id')
                         }).destroy({
                             success: function() {
+                                var parentNode = record.parentNode;
                                 record.remove();
+                                if (!parentNode.hasChildNodes()) {
+                                    parentNode.set('leaf', true);
+                                    parentNode.set('expandable', false);
+                                }
                             }
                         });
                     }
@@ -134,14 +139,10 @@ Ext.define('Security.controller.OrgaController', {
                 orga.save({
                     success: function(organization) {
                         if (organization.get('id') != selectedNode.get('id')) {
-                            if (selectedNode.isLeaf()) {                    
-                                selectedNode.set('expandable', true);
-                                selectedNode.set('leaf', false);
-                                selectedNode.appendChild(organization);
-                                selectedNode.expand();
-                            } else {
-                                selectedNode.appendChild(organization);
-                            }
+                            selectedNode.set('expandable', true);
+                            selectedNode.set('leaf', false);
+                            selectedNode.appendChild(organization);
+                            selectedNode.expand();
                         }
                         win.close();
                     }

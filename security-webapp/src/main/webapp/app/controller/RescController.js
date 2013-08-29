@@ -82,7 +82,12 @@ Ext.define('Security.controller.RescController', {
                             id: record.get('id')
                         }).destroy({
                             success: function() {
+                                var parentNode = record.parentNode;
                                 record.remove();
+                                if (!parentNode.hasChildNodes()) {
+                                    parentNode.set('leaf', true);
+                                    parentNode.set('expandable', false);
+                                }
                             }
                         });
                     }
@@ -129,14 +134,10 @@ Ext.define('Security.controller.RescController', {
             resc.save({
                 success: function(resource) {
                     if (resource.get('id') != selectedNode.get('id')) {
-                        if (selectedNode.isLeaf()) {                    
-                            selectedNode.set('expandable', true);
-                            selectedNode.set('leaf', false);
-                            selectedNode.appendChild(resource);
-                            selectedNode.expand();
-                        } else {
-                            selectedNode.appendChild(resource);
-                        }
+                        selectedNode.set('expandable', true);
+                        selectedNode.set('leaf', false);
+                        selectedNode.appendChild(resource);
+                        selectedNode.expand();
                     }
                     win.close();
                 }
